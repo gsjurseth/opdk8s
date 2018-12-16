@@ -1,0 +1,43 @@
+# With SMTP
+MpiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  5-node.config: |-
+    #!/bin/bash
+DS1=zf-0
+DS2=zf-1
+DS3=zf-2
+PGM=pgm-0
+PGS=pgs-0
+RPM1=rmp-0
+RPM2=rmp-1
+#HOSTIP=$(hostname -i)
+ENABLE_SYSTEM_CHECK=y
+ADMIN_EMAIL=opdk@google.com
+APIGEE_ADMINPW=Simple123
+LICENSE_FILE=/tmp/license.txt
+MSIP=$IP1
+USE_LDAP_REMOTE_HOST=n
+LDAP_TYPE=1
+APIGEE_LDAPPW=LDAP_PASSWORD
+MP_POD=gateway
+REGION=dc-1
+ZK_HOSTS="$DS1 $DS2 $DS3"
+ZK_CLIENT_HOSTS="$DS1 $DS2 $DS3"
+# Must use IP addresses for CASS_HOSTS, not DNS names.
+CASS_HOSTS="$DS1 $DS2 $DS3"
+# Default is postgres
+PG_PWD=postgres
+PG_MASTER=$IP4
+PG_STANDBY=$IP5
+SKIP_SMTP=n
+SMTPHOST=smtp.example.com
+SMTPUSER=smtp@example.com
+# omit for no username
+SMTPPASSWORD=SMTP_PASSWORD
+# omit for no password
+SMTPSSL=n
+SMTPPORT=25
+SMTPMAILFROM="My Company <myco@company.com>"

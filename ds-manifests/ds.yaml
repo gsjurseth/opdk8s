@@ -1,0 +1,137 @@
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: zkhs
+  labels:
+    app: zk
+spec:
+  ports:
+  - port: 2888
+    name: server
+  - port: 3888
+    name: leader-election
+  clusterIP: None
+  selector:
+    app: zk
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zk-cs
+  labels:
+    app: zk
+spec:
+  ports:
+  - port: 2181
+    name: client
+  selector:
+    app: zk
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: zk-pdb
+spec:
+  selector:
+    matchLabels:
+      app: zk
+  maxUnavailable: 1
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zk
+spec:
+  selector:
+    matchLabels:
+      app: zk
+  serviceName: zkhs
+  replicas: 3
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        app: zk
+    spec:
+      securityContext:
+        runAsUser: 999
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - zk
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: apigee-zk
+        imagePullPolicy: Always
+        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:6"
+        resources:
+          requests:
+            memory: ".5Gi"
+            cpu: ".5"
+        ports:
+        - containerPort: 2181
+          name: client
+        - containerPort: 2888
+          name: server
+        - containerPort: 3888
+          name: leader-election
+        command:
+        - sh
+        - -c
+        - "echo ZK_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo ZK_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).zkhs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p zk -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep 2181 | fgrep LISTEN"
+          initialDelaySeconds: 30
+          timeoutSeconds: 15
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep 2181 | fgrep LISTEN"
+          initialDelaySeconds: 30
+          timeoutSeconds: 15
+        volumeMounts:
+        - name: datadir
+          mountPath: /opt/apigee/data
+        - name: vardir
+          mountPath: /opt/apigee/var
+        - name: configmap-volume
+          mountPath: /config/5-node.config
+          readOnly: true
+          subPath: 5-node.config
+      volumes:
+      - name: configmap-volume
+        configMap:
+          defaultMode: 0755
+          name: node.config
+      securityContext:
+        runAsUser: 999
+        fsGroup: 998
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+  - metadata:
+      name: vardir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
