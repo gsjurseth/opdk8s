@@ -37,3 +37,7 @@ kubectl apply -f ds-manifests/ds.yaml
 You'll notice in the spec I've defined a livenessProbe and a readinessProbe. It seems that kubedns auto assigns the ip's once those work .. which is why i've set them up the way I have.
 
 It may be that I just need to bounce each node once this is done ..... I'm about to try that but wanted to get my stuff checked in for y'alls perusal.
+
+
+***** UPDATE *****
+Confirmed... bouncing them all in their running containers makes them work
