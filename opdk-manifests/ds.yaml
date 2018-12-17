@@ -1,0 +1,161 @@
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: dshs
+  labels:
+    app: ds
+spec:
+  ports:
+  - port: 2888
+    name: server
+  - port: 3888
+    name: leader-election
+  - port: 7199
+    name: jmx
+  - port: 7000
+    name: internode-comms
+  - port: 9042
+    name: cql
+  - port: 9160
+    name: thrift
+  clusterIP: None
+  selector:
+    app: ds
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ds-cs
+  labels:
+    app: ds
+spec:
+  ports:
+  - port: 2181
+    name: client
+  selector:
+    app: ds
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: ds-pdb
+spec:
+  selector:
+    matchLabels:
+      app: ds
+  maxUnavailable: 1
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ds
+spec:
+  selector:
+    matchLabels:
+      app: ds
+  serviceName: dshs
+  replicas: 3
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        app: ds
+    spec:
+      securityContext:
+        runAsUser: 999
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - ds
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: apigee-ds
+        imagePullPolicy: Always
+        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:8"
+        resources:
+          requests:
+            memory: ".5Gi"
+            cpu: ".5"
+        ports:
+        - containerPort: 2181
+          name: client
+        - containerPort: 2888
+          name: server
+        - containerPort: 3888
+          name: leader-election
+        - containerPort: 7199
+          name: jmx
+        - containerPort: 7000
+          name: internode-comms
+        - containerPort: 9042
+          name: cql
+        - containerPort: 9160
+          name: thrift
+        command:
+        - sh
+        - -c
+        - "cp /hwreqs/hardware_requirements.properties /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).dshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep 2181 | fgrep LISTEN"
+          initialDelaySeconds: 30
+          timeoutSeconds: 15
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep 2181 | fgrep LISTEN"
+          initialDelaySeconds: 30
+          timeoutSeconds: 15
+        volumeMounts:
+        - name: datadir
+          mountPath: /opt/apigee/data
+        - name: vardir
+          mountPath: /opt/apigee/var
+        - name: configmap-volume
+          mountPath: /config/5-node.config
+          readOnly: true
+          subPath: 5-node.config
+        - name: hwreqs-volume
+          mountPath: /hwreqs/hardware_requirements.properties
+          readOnly: true
+          subPath: hardware_requirements.properties
+      volumes:
+      - name: configmap-volume
+        configMap:
+          defaultMode: 0755
+          name: node.config
+      - name: hwreqs-volume
+        configMap:
+          defaultMode: 0755
+          name: hwreqs.config
+      securityContext:
+        runAsUser: 999
+        fsGroup: 998
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+  - metadata:
+      name: vardir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi

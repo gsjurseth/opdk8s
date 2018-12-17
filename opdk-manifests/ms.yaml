@@ -2,59 +2,48 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: zkhs
+  name: ms
   labels:
-    app: zk
+    app: ms
 spec:
   ports:
-  - port: 2888
-    name: server
-  - port: 3888
-    name: leader-election
+  - port: 10389
+    name: openldap
+  - port: 8080
+    name: ms-api
+  - port: 9000
+    name: edge-ui
   clusterIP: None
   selector:
-    app: zk
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: zk-cs
-  labels:
-    app: zk
-spec:
-  ports:
-  - port: 2181
-    name: client
-  selector:
-    app: zk
+    app: ms
 ---
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: zk-pdb
+  name: ms-pdb
 spec:
   selector:
     matchLabels:
-      app: zk
+      app: ms
   maxUnavailable: 1
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: zk
+  name: ms
 spec:
   selector:
     matchLabels:
-      app: zk
-  serviceName: zkhs
-  replicas: 3
+      app: ms
+  serviceName: ms
+  replicas: 1
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel
   template:
     metadata:
       labels:
-        app: zk
+        app: ms
     spec:
       securityContext:
         runAsUser: 999
@@ -66,27 +55,27 @@ spec:
                   - key: "app"
                     operator: In
                     values:
-                    - zk
+                    - ms
               topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: apigee-zk
+      - name: apigee-ms
         imagePullPolicy: Always
         image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:8"
         resources:
           requests:
-            memory: ".5Gi"
-            cpu: ".5"
+            memory: ".25Gi"
+            cpu: ".25"
         ports:
-        - containerPort: 2181
-          name: client
-        - containerPort: 2888
-          name: server
-        - containerPort: 3888
-          name: leader-election
+        - containerPort: 10389
+          name: openldap
+        - containerPort: 8080
+          name: ms-api
+        - containerPort: 9000
+          name: edge-ui
         command:
         - sh
         - -c
-        - "echo C_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo C_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo DS_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo DS_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo ZK_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo ZK_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).zkhs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "cp /hwreqs/hardware_requirements.properties /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).ms.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /config/5-node.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:
@@ -112,11 +101,19 @@ spec:
           mountPath: /config/5-node.config
           readOnly: true
           subPath: 5-node.config
+        - name: hwreqs-volume
+          mountPath: /hwreqs/hardware_requirements.properties
+          readOnly: true
+          subPath: hardware_requirements.properties
       volumes:
       - name: configmap-volume
         configMap:
           defaultMode: 0755
           name: node.config
+      - name: hwreqs-volume
+        configMap:
+          defaultMode: 0755
+          name: hwreqs.config
       securityContext:
         runAsUser: 999
         fsGroup: 998
