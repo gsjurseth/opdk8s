@@ -1,4 +1,4 @@
-# Initial experiments to get zk running
+# Initial experiments to get opdk running
 so basically I did the following
 
  * built a docker with apigee-setup installed and ready
@@ -7,7 +7,9 @@ so basically I did the following
  * created a spec which updates some requirements (lower the mem and cpu reqs for ZK)
  * deployed a stateful set and watched
 --- updates
+ * added a few more configmaps to handle license file and hardware_requirements.properties
  * changed profile to ds: this is now working
+ * added a sts for profile ms which is now working
 
 ## Docker
 So, I had to build the docker with the docker file you see below. I used this command to do so:
@@ -28,13 +30,23 @@ What I have here is a statefulset which I've copied from the example on kubernet
 
 I have a 5 node config set as a configmap which I create like so:
 ```bash
-create configmap node.config --from-file=5-node.config
+kubectrl create configmap node.config --from-file=5-node.config
+```
+I also have overridden the hardware requirements and added license file like so:
+```bash
+kubectl create configmap hwreqs.config --from-file=hardware_requirements.properties
+kubectl create configmap license.config --from-file=../../license.txt
 ```
 
 And then i'm ready to just fire off the statefulset
 
+### datastore
 ```bash
-kubectl apply -f ds-manifests/ds.yaml
+kubectl apply -f opdk-manifests/ds.yaml
+```
+### management-server
+```bash
+kubectl apply -f opdk-manifests/ms.yaml
 ```
 
 You'll notice in the spec I've defined a livenessProbe and a readinessProbe. It seems that kubedns auto assigns the ip's once those work .. which is why i've set them up the way I have.

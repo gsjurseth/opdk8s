@@ -7,6 +7,8 @@ metadata:
     app: ds
 spec:
   ports:
+  - port: 2181
+    name: client
   - port: 2888
     name: server
   - port: 3888
@@ -20,19 +22,6 @@ spec:
   - port: 9160
     name: thrift
   clusterIP: None
-  selector:
-    app: ds
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: ds-cs
-  labels:
-    app: ds
-spec:
-  ports:
-  - port: 2181
-    name: client
   selector:
     app: ds
 ---
@@ -132,6 +121,10 @@ spec:
           mountPath: /hwreqs/hardware_requirements.properties
           readOnly: true
           subPath: hardware_requirements.properties
+        - name: license-volume
+          mountPath: /license/license.txt
+          readOnly: true
+          subPath: license.txt
       volumes:
       - name: configmap-volume
         configMap:
@@ -141,6 +134,10 @@ spec:
         configMap:
           defaultMode: 0755
           name: hwreqs.config
+      - name: license-volume
+        configMap:
+          defaultMode: 0755
+          name: license.config
       securityContext:
         runAsUser: 999
         fsGroup: 998

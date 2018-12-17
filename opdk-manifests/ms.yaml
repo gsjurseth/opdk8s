@@ -63,7 +63,7 @@ spec:
         image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:8"
         resources:
           requests:
-            memory: ".25Gi"
+            memory: ".5Gi"
             cpu: ".25"
         ports:
         - containerPort: 10389
@@ -81,17 +81,17 @@ spec:
             command:
             - sh
             - -c
-            - "netstat -anp | fgrep 2181 | fgrep LISTEN"
-          initialDelaySeconds: 30
-          timeoutSeconds: 15
+            - "netstat -anp | fgrep 8080 | fgrep LISTEN"
+          initialDelaySeconds: 600
+          timeoutSeconds: 5
         livenessProbe:
           exec:
             command:
             - sh
             - -c
-            - "netstat -anp | fgrep 2181 | fgrep LISTEN"
-          initialDelaySeconds: 30
-          timeoutSeconds: 15
+            - "netstat -anp | fgrep 8080 | fgrep LISTEN"
+          initialDelaySeconds: 600
+          timeoutSeconds: 5
         volumeMounts:
         - name: datadir
           mountPath: /opt/apigee/data
@@ -105,6 +105,10 @@ spec:
           mountPath: /hwreqs/hardware_requirements.properties
           readOnly: true
           subPath: hardware_requirements.properties
+        - name: license-volume
+          mountPath: /license/license.txt
+          readOnly: true
+          subPath: license.txt
       volumes:
       - name: configmap-volume
         configMap:
@@ -114,6 +118,10 @@ spec:
         configMap:
           defaultMode: 0755
           name: hwreqs.config
+      - name: license-volume
+        configMap:
+          defaultMode: 0755
+          name: license.config
       securityContext:
         runAsUser: 999
         fsGroup: 998
