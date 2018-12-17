@@ -48,6 +48,10 @@ kubectl apply -f opdk-manifests/ds.yaml
 ```bash
 kubectl apply -f opdk-manifests/ms.yaml
 ```
+### routers and message processors
+```bash
+kubectl apply -f opdk-manifests/rmp.yaml
+```
 
 You'll notice in the spec I've defined a livenessProbe and a readinessProbe. It seems that kubedns auto assigns the ip's once those work .. which is why i've set them up the way I have.
 
@@ -56,3 +60,7 @@ It may be that I just need to bounce each node once this is done ..... I'm about
 
 ***** UPDATE *****
 Confirmed... bouncing them all in their running containers makes them work
+
+
+# Another update
+All seems to work now
