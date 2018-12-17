@@ -86,7 +86,7 @@ spec:
         command:
         - sh
         - -c
-        - "echo ZK_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo ZK_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).zkhs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p zk -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "echo C_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo C_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo DS_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo DS_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo ZK_MIN_CPU=1 >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && echo ZK_MIN_MEM=1GB >> /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).zkhs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/5-node.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:

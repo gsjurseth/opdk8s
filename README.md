@@ -6,6 +6,8 @@ so basically I did the following
  * created a cluster with 5 nodes
  * created a spec which updates some requirements (lower the mem and cpu reqs for ZK)
  * deployed a stateful set and watched
+--- updates
+ * changed profile to ds: this is now working
 
 ## Docker
 So, I had to build the docker with the docker file you see below. I used this command to do so:
