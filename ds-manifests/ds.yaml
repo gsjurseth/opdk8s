@@ -71,7 +71,7 @@ spec:
       containers:
       - name: apigee-zk
         imagePullPolicy: Always
-        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:6"
+        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:8"
         resources:
           requests:
             memory: ".5Gi"

@@ -12,7 +12,10 @@ RUN yum -y install java-1.8.0-openjdk-devel bind-utils sudo
 RUN curl https://software.apigee.com/bootstrap_4.18.05.sh -o /tmp/bootstrap_4.18.05.sh
 RUN JAVA_HOME=/usr/lib/jvm/java-1.8.0 bash /tmp/bootstrap_4.18.05.sh apigeeuser=$user apigeepassword=$pass
 RUN JAVA_HOME=/usr/lib/jvm/java-1.8.0 /opt/apigee/apigee-service/bin/apigee-service apigee-setup install
-RUN echo 'export PATH=$PATH:/opt/apigee/apigee-cassandra/bin:/opt/apigee/apigee-service/bin:/opt/apigee/apigee-zookeeper/bin' >> /etc/bashrc
+RUN echo 'export PATH=$PATH:/opt/apigee/apigee-cassandra/bin:/opt/apigee/apigee-service/bin:/opt/apigee/apigee-zookeeper/bin' >> /etc/profile
 RUN echo 'apigee ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+RUN cp /etc/profile /opt/apigee/.bashrc
+RUN chown apigee:apigee /opt/apigee/.bashrc
+RUN chmod 775 /opt/apigee/.bashrc
 
 CMD /bin/bash
