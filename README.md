@@ -1,10 +1,11 @@
 # Initial experiments to get zk running
 so basically I did the following
-o built a docker with apigee-setup installed and ready
-o published said docker to my project gcr
-o created a cluster with 5 nodes
-o created a spec which updates some requirements (lower the mem and cpu reqs for ZK)
-o deployed a stateful set and watched
+
+ * built a docker with apigee-setup installed and ready
+ * published said docker to my project gcr
+ * created a cluster with 5 nodes
+ * created a spec which updates some requirements (lower the mem and cpu reqs for ZK)
+ * deployed a stateful set and watched
 
 ## Docker
 So, I had to build the docker with the docker file you see below. I used this command to do so:
