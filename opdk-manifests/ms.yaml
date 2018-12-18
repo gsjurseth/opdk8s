@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms
+  name: mshs
   labels:
-    app: ms
+    app: mshs
 spec:
   ports:
   - port: 10389
@@ -39,7 +39,7 @@ spec:
   replicas: 1
   updateStrategy:
     type: RollingUpdate
-  podManagementPolicy: Parallel
+  podManagementPolicy: OrderedReady
   template:
     metadata:
       labels:
@@ -75,22 +75,22 @@ spec:
         command:
         - sh
         - -c
-        - "cp /hwreqs/hardware_requirements.properties /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).ms.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "cp /hwreqs/hardware_requirements.properties /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).mshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /config/5-node.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:
             - sh
             - -c
-            - "netstat -anp | fgrep 8080 | fgrep LISTEN"
-          initialDelaySeconds: 600
+            - "netstat -anp | fgrep LISTEN"
+          initialDelaySeconds: 300
           timeoutSeconds: 5
         livenessProbe:
           exec:
             command:
             - sh
             - -c
-            - "netstat -anp | fgrep 8080 | fgrep LISTEN"
-          initialDelaySeconds: 600
+            - "netstat -anp | fgrep LISTEN"
+          initialDelaySeconds: 300
           timeoutSeconds: 5
         volumeMounts:
         - name: datadir
