@@ -57,7 +57,7 @@ spec:
   replicas: 2
   updateStrategy:
     type: RollingUpdate
-  podManagementPolicy: Parallel
+  podManagementPolicy: OrderedReady
   template:
     metadata:
       labels:
@@ -81,8 +81,8 @@ spec:
         image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:8"
         resources:
           requests:
-            memory: ".5Gi"
-            cpu: ".3"
+            memory: ".25Gi"
+            cpu: ".1"
         ports:
         - containerPort: 9001
           name: env1

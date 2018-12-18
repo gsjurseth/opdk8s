@@ -35,7 +35,7 @@ spec:
   selector:
     matchLabels:
       app: ms
-  serviceName: ms
+  serviceName: mshs
   replicas: 1
   updateStrategy:
     type: RollingUpdate
