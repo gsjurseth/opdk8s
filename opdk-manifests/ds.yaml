@@ -68,7 +68,7 @@ spec:
       containers:
       - name: apigee-ds
         imagePullPolicy: Always
-        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:8"
+        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:9"
         resources:
           requests:
             memory: ".5Gi"
@@ -91,7 +91,7 @@ spec:
         command:
         - sh
         - -c
-        - "cp /hwreqs/hardware_requirements.properties /opt/apigee/apigee-setup/conf/hardware_requirements.properties && sudo HOSTIP=\"$(hostname).dshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "sudo HOSTIP=\"$(hostname).dshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/5-node.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:

@@ -17,5 +17,6 @@ RUN echo 'apigee ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
 RUN cp /etc/profile /opt/apigee/.bashrc
 RUN chown apigee:apigee /opt/apigee/.bashrc
 RUN chmod 775 /opt/apigee/.bashrc
+RUN echo 'networkaddress.cache.ttl=0' >> /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64/jre/lib/security/java.security
 
 CMD /bin/bash
