@@ -25,7 +25,7 @@ spec:
   selector:
     matchLabels:
       app: ms
-  maxUnavailable: 1
+  maxUnavailable: 0
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -109,6 +109,10 @@ spec:
           mountPath: /license/license.txt
           readOnly: true
           subPath: license.txt
+        - name: org-config-volume
+          mountPath: /org/org.config
+          readOnly: true
+          subPath: org.config
       volumes:
       - name: configmap-volume
         configMap:
@@ -122,6 +126,10 @@ spec:
         configMap:
           defaultMode: 0755
           name: license.config
+      - name: org-config-volume
+        configMap:
+          defaultMode: 0755
+          name: org.config
       securityContext:
         runAsUser: 999
         fsGroup: 998
