@@ -32,7 +32,7 @@ docker push eu.gcr.io/gsj-k8s-training/apigee-opdk:6
 Now we're ready for the k8s part of this
 
 ## Kubernetes
-What I have here is a statefulset which I've copied from the example on kubernete's own homepage. It's not working but it *is* successfully setting up domain names that resolve between the hosts... ZooKeeper refuses to see them as valid domain names which I don't understand, but working they are...
+What I have here is a statefulset which I've copied from the example on kubernete's own homepage. It's working and *is* successfully setting up domain names that resolve between the hosts... 
 
 I have a 5 node config set as a configmap which I create like so:
 ```bash
