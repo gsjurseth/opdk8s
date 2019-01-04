@@ -1,0 +1,150 @@
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: pshs
+  labels:
+    app: pshs
+spec:
+  ports:
+  - port: 22
+    name: ssh
+  - port: 1103
+    name: jmx
+  - port: 4530
+    name: cache
+  - port: 5432
+    name: qpid-ps-comms
+  - port: 8084
+    name: mgmt-port
+  clusterIP: None
+  selector:
+    app: ps
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: ps-pdb
+spec:
+  selector:
+    matchLabels:
+      app: ps
+  maxUnavailable: 0
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ps
+spec:
+  selector:
+    matchLabels:
+      app: ps
+  serviceName: pshs
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: OrderedReady
+  template:
+    metadata:
+      labels:
+        app: ps
+    spec:
+      securityContext:
+        runAsUser: 999
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - ps
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: apigee-ps
+        imagePullPolicy: Always
+        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:9"
+        resources:
+          requests:
+            memory: ".3Gi"
+            cpu: ".3"
+        ports:
+        - containerPort: 22
+          name: ssh
+        - containerPort: 1103
+          name: jmx
+        - containerPort: 4530
+          name: cache
+        - containerPort: 5432
+          name: qpid-ps-comms
+        - containerPort: 8084
+          name: mgmt-port
+        command:
+        - sh
+        - -c
+        - "sudo HOSTIP=\"$(hostname).pshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ps -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep LISTEN"
+          initialDelaySeconds: 300
+          timeoutSeconds: 5
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep LISTEN"
+          initialDelaySeconds: 300
+          timeoutSeconds: 5
+        volumeMounts:
+        - name: datadir
+          mountPath: /opt/apigee/data
+        - name: vardir
+          mountPath: /opt/apigee/var
+        - name: configmap-volume
+          mountPath: /config/5-node.config
+          readOnly: true
+          subPath: 5-node.config
+        - name: license-volume
+          mountPath: /license/license.txt
+          readOnly: true
+          subPath: license.txt
+        - name: org-config-volume
+          mountPath: /org/org.config
+          readOnly: true
+          subPath: org.config
+      volumes:
+      - name: configmap-volume
+        configMap:
+          defaultMode: 0755
+          name: node.config
+      - name: license-volume
+        configMap:
+          defaultMode: 0755
+          name: license.config
+      - name: org-config-volume
+        configMap:
+          defaultMode: 0755
+          name: org.config
+      securityContext:
+        runAsUser: 999
+        fsGroup: 998
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+  - metadata:
+      name: vardir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
