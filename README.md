@@ -62,6 +62,11 @@ kubectl apply -f opdk-manifests/rmp.yaml
 ```bash
 kubectl apply -f opdk-manifests/rmp.yaml
 ```
+### and now analytics
+```bash
+kubectl apply -f opdk-manifests/qs.yaml
+kubectl apply -f opdk-manifests/ps.yaml
+```
 ## Now let's setup the ingress and create the org
 You'll notice in the spec I've defined a livenessProbe and a readinessProbe. It seems that kubedns auto assigns the ip's once those work .. which is why i've set them up the way I have.
 
