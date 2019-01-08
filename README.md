@@ -15,7 +15,8 @@ so basically I did the following
  * tried killing off datastore pods to see if they'd autorecover (the Dockerbuild includes a change to the jvm's java.security file which should override the caching nature of the jvm ... but it does't seem to work)
 
 # TODO
-I need to automate a bit more and i need to find a way to have the k8s setup automagically detect issues with zookeeper and recover.... I will look into PodLifeCycle which I think will help
+ * setup management server and rmp's to rely on the service for the datastore nodes instead of the individual nodes
+ * setup slave ps-servers and use a service for them as well
 
 ## Docker
 So, I had to build the docker with the docker file you see below. I used this command to do so:
@@ -59,8 +60,9 @@ kubectl apply -f opdk-manifests/ms.yaml
 kubectl apply -f opdk-manifests/rmp.yaml
 ```
 ### routers and message processors
+And look! They're no longer an STS, but a replicaset ... They register and deregister themselves
 ```bash
-kubectl apply -f opdk-manifests/rmp.yaml
+kubectl apply -f opdk-manifests/rmp-no-sts.yaml
 ```
 ### and now analytics
 ```bash

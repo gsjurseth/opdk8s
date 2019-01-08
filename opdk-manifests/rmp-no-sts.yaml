@@ -3,8 +3,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: rmphs
-  labels:
-    app: rmp
 spec:
   ports:
   - port: 9001
@@ -35,50 +33,31 @@ spec:
   selector:
     app: rmp
 ---
-apiVersion: policy/v1beta1
-kind: PodDisruptionBudget
-metadata:
-  name: rmp-pdb
-spec:
-  selector:
-    matchLabels:
-      app: rmp
-  maxUnavailable: 1
----
 apiVersion: apps/v1
-kind: StatefulSet
+kind: ReplicaSet
 metadata:
   name: rmp
+  labels:
+    app: rmp
 spec:
+  # modify replicas according to your case
+  replicas: 3
   selector:
     matchLabels:
       app: rmp
-  serviceName: rmphs
-  replicas: 2
-  updateStrategy:
-    type: RollingUpdate
-  podManagementPolicy: OrderedReady
   template:
     metadata:
       labels:
         app: rmp
     spec:
-      securityContext:
-        runAsUser: 999
-      affinity:
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                  - key: "app"
-                    operator: In
-                    values:
-                    - rmp
-              topologyKey: "kubernetes.io/hostname"
       containers:
       - name: apigee-rmp
         imagePullPolicy: Always
         image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:16"
+        lifecycle:
+          preStop:
+            exec:
+              command: ["sh","-c","/deregister/deRegisterRMP.sh"]
         resources:
           requests:
             memory: ".25Gi"
@@ -107,7 +86,7 @@ spec:
         command:
         - sh
         - -c
-        - "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).rmphs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).rmphs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /config/5-node.config && /register/registerRMP.sh && while true ; do tail -f /opt/apigee/var/log/edge-message-processor/logs/system.log ; done" 
         readinessProbe:
           exec:
             command:
@@ -125,50 +104,31 @@ spec:
           initialDelaySeconds: 90
           timeoutSeconds: 15
         volumeMounts:
-        - name: datadir
-          mountPath: /opt/apigee/data
-        - name: vardir
-          mountPath: /opt/apigee/var
+        - name: deregister-volume
+          mountPath: /deregister/deRegisterRMP.sh
+          readOnly: true
+          subPath: deRegisterRMP.sh
+        - name: register-volume
+          mountPath: /register/registerRMP.sh
+          readOnly: true
+          subPath: registerRMP.sh
         - name: configmap-volume
           mountPath: /config/5-node.config
           readOnly: true
           subPath: 5-node.config
-        - name: hwreqs-volume
-          mountPath: /hwreqs/hardware_requirements.properties
-          readOnly: true
-          subPath: hardware_requirements.properties
-        - name: license-volume
-          mountPath: /license/license.txt
-          readOnly: true
-          subPath: license.txt
       volumes:
+      - name: deregister-volume
+        configMap:
+          defaultMode: 0755
+          name: deregister-rmp
+      - name: register-volume
+        configMap:
+          defaultMode: 0755
+          name: register-rmp
       - name: configmap-volume
         configMap:
           defaultMode: 0755
           name: node.config
-      - name: hwreqs-volume
-        configMap:
-          defaultMode: 0755
-          name: hwreqs.config
-      - name: license-volume
-        configMap:
-          defaultMode: 0755
-          name: license.config
       securityContext:
         runAsUser: 999
         fsGroup: 998
-  volumeClaimTemplates:
-  - metadata:
-      name: datadir
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi
-  - metadata:
-      name: vardir
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi
