@@ -78,7 +78,7 @@ spec:
       containers:
       - name: apigee-rmp
         imagePullPolicy: Always
-        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:9"
+        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:16"
         resources:
           requests:
             memory: ".25Gi"
@@ -107,7 +107,7 @@ spec:
         command:
         - sh
         - -c
-        - "sudo HOSTIP=\"$(hostname).rmphs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).rmphs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /config/5-node.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:
