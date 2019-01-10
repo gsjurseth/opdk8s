@@ -18,7 +18,17 @@ so basically I did the following
  * setup management server and rmp's to rely on the service for the datastore nodes instead of the individual nodes
  * setup slave ps-servers and use a service for them as well
 
-## Docker
+# Playbooks
+Here i've setup a couple of quick start play books to get this up and running in your own gke-cluster quickly.
+
+## Spin up a working environment
+Quick play book to get everything up and running. For my own environment i'm using an nginx-ingress (in ingress-manifests) that's configured to use hostnames i've registered at freedns: ui|apiprod|apims.evils.in. You can create your own ingress at the very end of the setup but you'll need to have your own DNS to make it work. I've not included those instructions here as they really have nothing to do with Apigee. At a later time I may add that info and even automate some of it as well.
+
+For any of this you can watch them by looking at the logs like this for example:
+
+`kubectl logs -f ds-0`
+
+### Docker
 So, I had to build the docker with the docker file you see below. I used this command to do so:
 ```bash
 docker build -t apigee-ds . --build-arg user=<userUser> --build-arg pass=<yourPass>
@@ -30,47 +40,97 @@ docker tag apigee-opdk eu.gcr.io/gsj-k8s-training/apigee-opdk:6
 docker push eu.gcr.io/gsj-k8s-training/apigee-opdk:6
 ```
 
-Now we're ready for the k8s part of this
+### Update the spec files in `opdk-manifests`
+In this example it's just version `6`. If you've built this and deployed it gcr on your own you'll need to update he specs with the image as outlined above
 
-## Kubernetes
-What I have here is a statefulset which I've copied from the example on kubernete's own homepage. It's working and *is* successfully setting up domain names that resolve between the hosts... 
 
-I have a 5 node config set as a configmap which I create like so:
+### Move on the kube bits
+First we need to create all the configmaps that the installation an registration process uses as scripts
 ```bash
-kubectrl create configmap node.config --from-file=5-node.config
-```
-I also have setup config maps for the license and the organization config (Note .. license file not included in this org .. you'll need to refer to the path of your own license file)
-```bash
-kubectl create configmap license.config --from-file=../../license.txt
-kubectl create configmap org.config --from-file=org.config
+kubectl create configmap deregister-rmp --from-file=deRegisterRMP.sh
+kubectl create configmap opdk-ds-cluster.config --from-file=opdk-ds-cluster.config
+kubectl create configmap register-rmp --from-file=registerRMP.sh
 ```
 
-## Now setup the statefulset
+Second ... well, really it's another config map. But you need to use your own license file which i've obviously not included here
+```bash
+kubectl create configmap license.config --from-file=</path/to/license.txt>
+```
 
-### datastore
+### The datastore.
+A stateful set. you can use the log statements listed below to keep track of them. The last thing that happens is that the datastore runs the Zookeeper Keeper whose job it is to bounce zookeeper whenever one of them goes down and has to come up again.
 ```bash
 kubectl apply -f opdk-manifests/ds.yaml
+## and now watch them until they've all come up like so ...
+kubectl logs -f ds-0
+kubectl logs -f ds-1
+kubectl logs -f ds-2
 ```
-### management-server
+
+### Managment Server
+Once that's done we can spin up the management server
 ```bash
 kubectl apply -f opdk-manifests/ms.yaml
+## and now watch it while it comes up
+kubectl logs -f ms-0
 ```
-### routers and message processors
+
+### The RMPs
+Now let's setup the RMPs
 ```bash
 kubectl apply -f opdk-manifests/rmp.yaml
 ```
-### routers and message processors
-And look! They're no longer an STS, but a replicaset ... They register and deregister themselves
-```bash
-kubectl apply -f opdk-manifests/rmp-no-sts.yaml
-```
-### and now analytics
+
+### QPID
+Qpidd
 ```bash
 kubectl apply -f opdk-manifests/qs.yaml
-kubectl apply -f opdk-manifests/ps.yaml
 ```
-## Now let's setup the ingress and create the org
-You'll notice in the spec I've defined a livenessProbe and a readinessProbe. It seems that kubedns auto assigns the ip's once those work .. which is why i've set them up the way I have.
+
+### Postgres
+For postgres we have to do things in an odd order to get it all straight.
+We start with the postgres **slave**
+```bash
+kubectl apply -f opdk-manifests/ps-slave.yaml
+```
+That sets up a postgres alone instance via the `pdb` profile.
+
+Now we can move on to the master
+```bash
+kubectl apply -f opdk-manifests/ps-master.yaml
+```
+
+Finally, we run the ps profile on the slave to finish the installation
+```bash
+kubectl exec -ti ms-0 --  bash -c 'sudo HOSTIP="$(hostname).psslavehs.default.svc.cluster.local" /opt/apigee/apigee-setup/bin/setup.sh -p ps'
+```
+
+### The org
+Let's validate the install and onboard the org
+```bash
+kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-validate install'
+kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-validate setup -f /org/org.config'
+kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-provision setup-org -f /org/org.config'
+```
+
+### Enjoy
+Now you can use your environment for fun and profit
+
+## Kill it all and wipe it
+First we delete all the pods
+```bash
+kubectl delete -f opdk-manifests/
+```
+
+Next remove all the persisten volume claims
+```bash
+kubectl delete --all pvc
+```
+
+Finally remove all of the configmaps
+```bash
+kubectl delete --all configmap
+```
 
 ### create ingress
 First of all you'll need to edit ingress-frontend and update the host with one you think makes sense.... With that done you'll need to update the org.config configmap and recreate it so that when you create the org the vhost will be all setup

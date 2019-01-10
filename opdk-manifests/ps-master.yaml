@@ -83,7 +83,7 @@ spec:
         command:
         - sh
         - -c
-        - "sudo mkdir -p /opt/apigee/var/log && sudo chown apigee:apigee /opt/apigee && sudo chown -R apigee:apigee /opt/apigee/var && sudo chmod -R 775 /opt/apigee/var && sudo chown -R apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).psmasterhs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p pdb -f /config/opdk-ds-cluster.config && while true ; do sleep 1 ; done" 
+        - "sudo mkdir -p /opt/apigee/var/log && sudo chown apigee:apigee /opt/apigee && sudo chown -R apigee:apigee /opt/apigee/var && sudo chmod -R 775 /opt/apigee/var && sudo chown -R apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).psmasterhs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ps -f /config/opdk-ds-cluster.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:
