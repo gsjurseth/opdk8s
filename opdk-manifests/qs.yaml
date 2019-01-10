@@ -79,7 +79,7 @@ spec:
         command:
         - sh
         - -c
-        - "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).qshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p qs -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).qshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p qs -f /config/opdk-ds-cluster.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:
@@ -102,9 +102,9 @@ spec:
         - name: vardir
           mountPath: /opt/apigee/var
         - name: configmap-volume
-          mountPath: /config/5-node.config
+          mountPath: /config/opdk-ds-cluster.config
           readOnly: true
-          subPath: 5-node.config
+          subPath: opdk-ds-cluster.config
         - name: license-volume
           mountPath: /license/license.txt
           readOnly: true
@@ -117,7 +117,7 @@ spec:
       - name: configmap-volume
         configMap:
           defaultMode: 0755
-          name: node.config
+          name: opdk-ds-cluster.config
       - name: license-volume
         configMap:
           defaultMode: 0755

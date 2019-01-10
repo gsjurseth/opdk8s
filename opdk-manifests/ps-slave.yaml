@@ -2,56 +2,52 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dshs
+  name: psslavehs
   labels:
-    app: ds
+    app: psslavehs
 spec:
   ports:
-  - port: 2181
-    name: client
-  - port: 2888
-    name: server
-  - port: 3888
-    name: leader-election
-  - port: 7199
+  - port: 22
+    name: ssh
+  - port: 1103
     name: jmx
-  - port: 7000
-    name: internode-comms
-  - port: 9042
-    name: cql
-  - port: 9160
-    name: thrift
+  - port: 4530
+    name: cache
+  - port: 5432
+    name: qpid-ps-comms
+  - port: 8084
+    name: mgmt-port
   clusterIP: None
   selector:
-    app: ds
+    app: ps-slave
 ---
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: ds-pdb
+  name: ps-slave-pdb
 spec:
   selector:
     matchLabels:
-      app: ds
-  maxUnavailable: 1
+      app: ps-slave
+  maxUnavailable: 0
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ds
+  name: ps-slave
 spec:
   selector:
     matchLabels:
-      app: ds
-  serviceName: dshs
-  replicas: 3
+      app: ps-slave
+  serviceName: psslavehs
+  replicas: 1
   updateStrategy:
     type: RollingUpdate
   podManagementPolicy: Parallel
   template:
     metadata:
       labels:
-        app: ds
+        app: ps-slave
     spec:
       securityContext:
         runAsUser: 999
@@ -63,43 +59,47 @@ spec:
                   - key: "app"
                     operator: In
                     values:
-                    - ds
+                    - ps-slave
               topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: apigee-ds
+      - name: apigee-ps-slave
         imagePullPolicy: Always
         image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:16"
         resources:
           requests:
-            memory: ".5Gi"
-            cpu: ".5"
+            memory: ".3Gi"
+            cpu: ".3"
         ports:
-        - containerPort: 2181
-          name: client
-        - containerPort: 2888
-          name: server
-        - containerPort: 3888
-          name: leader-election
-        - containerPort: 7199
+        - containerPort: 22
+          name: ssh
+        - containerPort: 1103
           name: jmx
-        - containerPort: 7000
-          name: internode-comms
-        - containerPort: 9042
-          name: cql
-        - containerPort: 9160
-          name: thrift
+        - containerPort: 4530
+          name: cache
+        - containerPort: 5432
+          name: qpid-ps-comms
+        - containerPort: 8084
+          name: mgmt-port
         command:
         - sh
         - -c
-        - "sudo HOSTIP=\"$(hostname).dshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/opdk-ds-cluster.config && (for a in $(echo -e \"ds-0.dshs\nds-1.dshs\nds-2.dshs\" | fgrep -v $(hostname)) ; do echo \"trying $a\" ; curl -s -X POST http://$a:9999/zk ; done ; exit 0) && /localdaemon/zk-Keeper" 
+        - "sudo mkdir -p /opt/apigee/var/log && sudo chown apigee:apigee /opt/apigee && sudo chown -R apigee:apigee /opt/apigee/var && sudo chmod -R 775 /opt/apigee/var && sudo chown -R apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).psslavehs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p pdb -f /config/opdk-ds-cluster.config && while true ; do sleep 1 ; done" 
+        readinessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep LISTEN"
+          initialDelaySeconds: 300
+          timeoutSeconds: 5
         livenessProbe:
           exec:
             command:
             - sh
             - -c
-            - "netstat -anp | fgrep 9999 | fgrep LISTEN"
-          initialDelaySeconds: 180
-          timeoutSeconds: 15
+            - "netstat -anp | fgrep LISTEN"
+          initialDelaySeconds: 300
+          timeoutSeconds: 5
         volumeMounts:
         - name: datadir
           mountPath: /opt/apigee/data

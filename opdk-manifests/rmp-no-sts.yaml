@@ -86,7 +86,7 @@ spec:
         command:
         - sh
         - -c
-        - "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).rmphs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /config/5-node.config && /register/registerRMP.sh && while true ; do tail -f /opt/apigee/var/log/edge-message-processor/logs/system.log ; done" 
+        - "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).rmphs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p rmp -f /config/opdk-ds-cluster.config && (/register/registerRMP.sh ; exit 0) && while true ; do tail -f /opt/apigee/var/log/edge-message-processor/logs/system.log ; done" 
         readinessProbe:
           exec:
             command:
@@ -113,9 +113,9 @@ spec:
           readOnly: true
           subPath: registerRMP.sh
         - name: configmap-volume
-          mountPath: /config/5-node.config
+          mountPath: /config/opdk-ds-cluster.config
           readOnly: true
-          subPath: 5-node.config
+          subPath: opdk-ds-cluster.config
       volumes:
       - name: deregister-volume
         configMap:
@@ -128,7 +128,7 @@ spec:
       - name: configmap-volume
         configMap:
           defaultMode: 0755
-          name: node.config
+          name: opdk-ds-cluster.config
       securityContext:
         runAsUser: 999
         fsGroup: 998

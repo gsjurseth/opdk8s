@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: pshs
+  name: psmasterhs
   labels:
-    app: pshs
+    app: psmasterhs
 spec:
   ports:
   - port: 22
@@ -19,27 +19,27 @@ spec:
     name: mgmt-port
   clusterIP: None
   selector:
-    app: ps
+    app: ps-master
 ---
 apiVersion: policy/v1beta1
 kind: PodDisruptionBudget
 metadata:
-  name: ps-pdb
+  name: ps-master-pdb
 spec:
   selector:
     matchLabels:
-      app: ps
+      app: ps-master
   maxUnavailable: 0
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: ps
+  name: ps-master
 spec:
   selector:
     matchLabels:
-      app: ps
-  serviceName: pshs
+      app: ps-master
+  serviceName: psmasterhs
   replicas: 1
   updateStrategy:
     type: RollingUpdate
@@ -47,7 +47,7 @@ spec:
   template:
     metadata:
       labels:
-        app: ps
+        app: ps-master
     spec:
       securityContext:
         runAsUser: 999
@@ -59,10 +59,10 @@ spec:
                   - key: "app"
                     operator: In
                     values:
-                    - ps
+                    - ps-master
               topologyKey: "kubernetes.io/hostname"
       containers:
-      - name: apigee-ps
+      - name: apigee-ps-master
         imagePullPolicy: Always
         image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:16"
         resources:
@@ -83,7 +83,7 @@ spec:
         command:
         - sh
         - -c
-        - "sudo chown apigee:apigee /opt/apigee && sudo chown apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).pshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ps -f /config/5-node.config && while true ; do sleep 1 ; done" 
+        - "sudo mkdir -p /opt/apigee/var/log && sudo chown apigee:apigee /opt/apigee && sudo chown -R apigee:apigee /opt/apigee/var && sudo chmod -R 775 /opt/apigee/var && sudo chown -R apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).psmasterhs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p pdb -f /config/opdk-ds-cluster.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:
@@ -106,30 +106,22 @@ spec:
         - name: vardir
           mountPath: /opt/apigee/var
         - name: configmap-volume
-          mountPath: /config/5-node.config
+          mountPath: /config/opdk-ds-cluster.config
           readOnly: true
-          subPath: 5-node.config
+          subPath: opdk-ds-cluster.config
         - name: license-volume
           mountPath: /license/license.txt
           readOnly: true
           subPath: license.txt
-        - name: org-config-volume
-          mountPath: /org/org.config
-          readOnly: true
-          subPath: org.config
       volumes:
       - name: configmap-volume
         configMap:
           defaultMode: 0755
-          name: node.config
+          name: opdk-ds-cluster.config
       - name: license-volume
         configMap:
           defaultMode: 0755
           name: license.config
-      - name: org-config-volume
-        configMap:
-          defaultMode: 0755
-          name: org.config
       securityContext:
         runAsUser: 999
         fsGroup: 998
