@@ -139,19 +139,3 @@ Finally remove all of the configmaps
 ```bash
 kubectl delete --all configmap
 ```
-
-### create ingress
-First of all you'll need to edit ingress-frontend and update the host with one you think makes sense.... With that done you'll need to update the org.config configmap and recreate it so that when you create the org the vhost will be all setup
-```bash
-kubectl apply -f ingress-manifests/
-```
-
-### and now setup the org
-```bash
-kubectl exec -ti ms-0 --  bash
-#/opt/apigee/apigee-service/bin/apigee-service apigee-provision setup-org /org/org.config
-#and then get out
-```
-
-## Another update
-log in and test :)... If you delete an individual datastore pod you'll need to restart the zookeeper process on the other pods once k8s restarts the one  you deleted. I've tested this and it does seem to work.
