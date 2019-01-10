@@ -75,7 +75,7 @@ spec:
         command:
         - sh
         - -c
-        - "sudo chown apigee:apigee /opt/apigee && sudo chmod -R 775 /opt/apigee/data /opt/apigee/var && sudo HOSTIP=\"$(hostname).mshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /config/opdk-ds-cluster.config && while true ; do sleep 1 ; done" 
+        - "sudo mkdir -p /opt/apigee/var/log && sudo chown -R apigee:apigee /opt/apigee /opt/apigee/var /opt/apigee/data && sudo chmod -R 775 /opt/apigee /opt/apigee/var /opt/apigee/data && sudo HOSTIP=\"$(hostname).mshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /config/opdk-ds-cluster.config && while true ; do sleep 1 ; done" 
         readinessProbe:
           exec:
             command:

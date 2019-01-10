@@ -11,8 +11,10 @@ so basically I did the following
  * changed profile to ds: this is now working
  * added a sts for profile ms which is now working
  * added rmp
+ * added analytics
  * added ingress and tested
- * tried killing off datastore pods to see if they'd autorecover (the Dockerbuild includes a change to the jvm's java.security file which should override the caching nature of the jvm ... but it does't seem to work)
+ * wrote a daemon to watch for zookeeper events
+ * tested that I could kill datastore nodes indescriminately and see if everything would come back
 
 # TODO
  * setup management server and rmp's to rely on the service for the datastore nodes instead of the individual nodes
@@ -50,6 +52,7 @@ First we need to create all the configmaps that the installation an registration
 kubectl create configmap deregister-rmp --from-file=deRegisterRMP.sh
 kubectl create configmap opdk-ds-cluster.config --from-file=opdk-ds-cluster.config
 kubectl create configmap register-rmp --from-file=registerRMP.sh
+kubectl create configmap org.config --from-file=org.config
 ```
 
 Second ... well, really it's another config map. But you need to use your own license file which i've obviously not included here
@@ -57,7 +60,7 @@ Second ... well, really it's another config map. But you need to use your own li
 kubectl create configmap license.config --from-file=</path/to/license.txt>
 ```
 
-### The datastore.
+### The datastore (about 5 minutes)
 A stateful set. you can use the log statements listed below to keep track of them. The last thing that happens is that the datastore runs the Zookeeper Keeper whose job it is to bounce zookeeper whenever one of them goes down and has to come up again.
 ```bash
 kubectl apply -f opdk-manifests/ds.yaml
@@ -67,7 +70,7 @@ kubectl logs -f ds-1
 kubectl logs -f ds-2
 ```
 
-### Managment Server
+### Managment Server (about 5 minutes)
 Once that's done we can spin up the management server
 ```bash
 kubectl apply -f opdk-manifests/ms.yaml
@@ -75,19 +78,19 @@ kubectl apply -f opdk-manifests/ms.yaml
 kubectl logs -f ms-0
 ```
 
-### The RMPs
+### The RMPs (fast)
 Now let's setup the RMPs
 ```bash
-kubectl apply -f opdk-manifests/rmp.yaml
+kubectl apply -f opdk-manifests/rmp-no-sts.yaml
 ```
 
-### QPID
+### QPID (fast)
 Qpidd
 ```bash
 kubectl apply -f opdk-manifests/qs.yaml
 ```
 
-### Postgres
+### Postgres (this part needs to be done in steps)
 For postgres we have to do things in an odd order to get it all straight.
 We start with the postgres **slave**
 ```bash
@@ -102,7 +105,7 @@ kubectl apply -f opdk-manifests/ps-master.yaml
 
 Finally, we run the ps profile on the slave to finish the installation
 ```bash
-kubectl exec -ti ms-0 --  bash -c 'sudo HOSTIP="$(hostname).psslavehs.default.svc.cluster.local" /opt/apigee/apigee-setup/bin/setup.sh -p ps'
+kubectl exec -ti ps-slave-0 --  bash -c 'sudo HOSTIP="$(hostname).psslavehs.default.svc.cluster.local" /opt/apigee/apigee-setup/bin/setup.sh -p ps -f /config/opdk-ds-cluster.config'
 ```
 
 ### The org
@@ -111,6 +114,11 @@ Let's validate the install and onboard the org
 kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-validate install'
 kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-validate setup -f /org/org.config'
 kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-provision setup-org -f /org/org.config'
+```
+
+### Bounce the ui
+```bash
+kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service edge-ui restart'
 ```
 
 ### Enjoy

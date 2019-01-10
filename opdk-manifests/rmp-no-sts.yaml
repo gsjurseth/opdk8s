@@ -93,7 +93,7 @@ spec:
             - sh
             - -c
             - "netstat -anp | fgrep 8081 | fgrep LISTEN"
-          initialDelaySeconds: 90
+          initialDelaySeconds: 120
           timeoutSeconds: 15
         livenessProbe:
           exec:
@@ -101,7 +101,7 @@ spec:
             - sh
             - -c
             - "netstat -anp | fgrep 8081 | fgrep LISTEN"
-          initialDelaySeconds: 90
+          initialDelaySeconds: 120
           timeoutSeconds: 15
         volumeMounts:
         - name: deregister-volume
