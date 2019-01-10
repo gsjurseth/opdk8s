@@ -78,13 +78,13 @@ kubectl apply -f opdk-manifests/ms.yaml
 kubectl logs -f ms-0
 ```
 
-### The RMPs (fast)
+### The RMPs (2 mins)
 Now let's setup the RMPs
 ```bash
 kubectl apply -f opdk-manifests/rmp-no-sts.yaml
 ```
 
-### QPID (fast)
+### QPID (2 mins)
 Qpidd
 ```bash
 kubectl apply -f opdk-manifests/qs.yaml
