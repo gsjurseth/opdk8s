@@ -1,0 +1,14 @@
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: rmp-lb-service
+spec:
+  ports:
+  - port: 9001
+    name: env1
+  - port: 9002
+    name: env2
+  type: LoadBalancer
+  selector:
+    app: rmp
