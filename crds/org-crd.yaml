@@ -1,0 +1,39 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: org.apigee.google.com
+spec:
+  group: google.apigee.com
+  version: v1
+  scope: Namespaced
+  names:
+    plural: orgs
+    singular: org
+    kind: org
+  validation:
+    openAPIV3Schema:
+      required: ["spec"]
+      properties:
+        spec:
+          required: ["ORG_NAME","ORG_ADMIN"]
+          properties:
+            ORG_NAME:
+              type: "string"
+              minimum: 1
+            ORG_ADMIN:
+              type: "string"
+              minimum: 1
+            NEW_USER:
+              type: boolean
+            USER_NAME:
+              type: "string"
+              minimum: 1
+            FIRST_NAME:
+              type: "string"
+              minimum: 1
+            LAST_NAME:
+              type: "string"
+              minimum: 1
+            USER_PWD:
+              type: "string"
+              minimum: 1
