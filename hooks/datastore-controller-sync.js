@@ -266,10 +266,11 @@ module.exports = async function (context) {
   console.log('all of it: %j', context);
   console.log('The body: %j', observed);
 
+  let dastuff = [ dsSvc, dsPvc, dsPod ];
 
   //  let observedRS = observed.children['ReplicaSet.extensions/v1beta1'];
 
   //  let service = observed.children['Service.v1'][bgd.spec.service.metadata.name];
 
-  return {status: 200, body: { foo: 'bar' }, headers: {'Content-Type': 'application/json'}};
+  return {status: 200, body: dastuff, headers: {'Content-Type': 'application/json'}};
 };

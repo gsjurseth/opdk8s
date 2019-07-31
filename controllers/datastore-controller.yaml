@@ -2,6 +2,7 @@ apiVersion: metacontroller.k8s.io/v1alpha1
 kind: CompositeController
 metadata:
   name: datastore-controller
+  namespace: apigee
 spec:
   generateSelector: true
   parentResource:
@@ -15,7 +16,7 @@ spec:
   hooks:
     sync:
       webhook:
-        url: http://datastore-controller.metacontroller/datastore-sync
+        url: http://datastore-controller.metacontroller/datastore-controller-sync
 ---
 apiVersion: apps/v1beta1
 kind: Deployment
@@ -34,7 +35,7 @@ spec:
     spec:
       containers:
       - name: controller
-        image: metacontroller/nodejs-server:0.1
+        image: eu.gcr.io/apigee-trashcan-backends/nodejs-server:0.1
         imagePullPolicy: Always
         volumeMounts:
         - name: hooks

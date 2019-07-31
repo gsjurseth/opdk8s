@@ -1,7 +1,7 @@
 apiVersion: apigee.google.com/v1
 kind: datastore
 metadata:
-  name: apigee-datastore
+  name: opdkds
   namespace: apigee
 spec:
   replicants: 3

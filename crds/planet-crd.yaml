@@ -15,11 +15,11 @@ spec:
       required: ["spec"]
       properties:
         spec:
-          required: ["ADMIN_EMAIL","APIGEE_ADMINPW"]
+          required: ["admin_email","adminpw"]
           properties:
-            ADMIN_EMAIL:
+            admin_email:
               type: "string"
               minimum: 1
-            APIGEE_ADMINPW:
+            adminpw:
               type: "string"
               minimum: 1
