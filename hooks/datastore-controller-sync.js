@@ -261,7 +261,7 @@ const dsPod = {
   };
 
 module.exports = async function (context) {
-  //let observed = context.request.body;
+  let observed = context.request.body;
   //let desired = {status: {}, children: []};
   console.log('all of it: %j', context);
   console.log('The body: %j', observed);
