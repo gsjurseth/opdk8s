@@ -1,0 +1,142 @@
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  name: dshs
+  labels:
+    app: ds
+spec:
+  ports:
+  - port: 2181
+    name: client
+  - port: 2888
+    name: server
+  - port: 3888
+    name: leader-election
+  - port: 7199
+    name: jmx
+  - port: 7000
+    name: internode-comms
+  - port: 9042
+    name: cql
+  - port: 9160
+    name: thrift
+  clusterIP: None
+  selector:
+    app: ds
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: ds-pdb
+spec:
+  selector:
+    matchLabels:
+      app: ds
+  maxUnavailable: 1
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ds
+spec:
+  selector:
+    matchLabels:
+      app: ds
+  serviceName: dshs
+  replicas: 3
+  updateStrategy:
+    type: RollingUpdate
+  podManagementPolicy: Parallel
+  template:
+    metadata:
+      labels:
+        app: ds
+    spec:
+      securityContext:
+        runAsUser: 999
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - ds
+              topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: apigee-ds
+        imagePullPolicy: Always
+        image: "eu.gcr.io/gsj-k8s-training/apigee-opdk:16"
+        resources:
+          requests:
+            memory: ".5Gi"
+            cpu: ".5"
+        ports:
+        - containerPort: 2181
+          name: client
+        - containerPort: 2888
+          name: server
+        - containerPort: 3888
+          name: leader-election
+        - containerPort: 7199
+          name: jmx
+        - containerPort: 7000
+          name: internode-comms
+        - containerPort: 9042
+          name: cql
+        - containerPort: 9160
+          name: thrift
+        command:
+        - sh
+        - -c
+        - "sudo HOSTIP=\"$(hostname).dshs.default.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/opdk-ds-cluster.config && (for a in $(echo -e \"ds-0.dshs\nds-1.dshs\nds-2.dshs\" | fgrep -v $(hostname)) ; do echo \"trying $a\" ; curl -s -X POST http://$a:9999/zk ; done ; exit 0) && /localdaemon/zk-Keeper" 
+        livenessProbe:
+          exec:
+            command:
+            - sh
+            - -c
+            - "netstat -anp | fgrep 9999 | fgrep LISTEN"
+          initialDelaySeconds: 180
+          timeoutSeconds: 15
+        volumeMounts:
+        - name: datadir
+          mountPath: /opt/apigee/data
+        - name: vardir
+          mountPath: /opt/apigee/var
+        - name: configmap-volume
+          mountPath: /config/opdk-ds-cluster.config
+          readOnly: true
+          subPath: opdk-ds-cluster.config
+        - name: license-volume
+          mountPath: /license/license.txt
+          readOnly: true
+          subPath: license.txt
+      volumes:
+      - name: configmap-volume
+        configMap:
+          defaultMode: 0755
+          name: opdk-ds-cluster.config
+      - name: license-volume
+        configMap:
+          defaultMode: 0755
+          name: license.config
+      securityContext:
+        runAsUser: 999
+        fsGroup: 998
+  volumeClaimTemplates:
+  - metadata:
+      name: datadir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
+  - metadata:
+      name: vardir
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
