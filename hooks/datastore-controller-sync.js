@@ -212,7 +212,8 @@ const dsPod = {
       "volumeClaimTemplates": [
         {
           "metadata": {
-            "name": "datadir"
+            "name": "datadir",
+            "namespace": "apigee"
           },
           "spec": {
             "accessModes": [
@@ -227,7 +228,8 @@ const dsPod = {
         },
         {
           "metadata": {
-            "name": "vardir"
+            "name": "vardir",
+            "namespace": "apigee"
           },
           "spec": {
             "accessModes": [
