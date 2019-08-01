@@ -61,25 +61,9 @@ const dsSvc = {
     }
   };
 
-const dsPvc =  {
-    "apiVersion": "policy/v1beta1",
-    "kind": "PodDisruptionBudget",
-    "metadata": {
-      "name": "ds-pdb"
-    },
-    "spec": {
-      "maxUnavailable": 1,
-      "selector": {
-        "matchLabels": {
-          "app": "ds"
-        }
-      }
-    }
-  };
-
 const dsPod = {
-    "apiVersion": "apps/v1",
-    "kind": "StatefulSet",
+    "apiVersion": "ctl.enisoc.com/v1",
+    "kind": "CatSet",
     "metadata": {
       "name": "ds"
     },
@@ -260,17 +244,59 @@ const dsPod = {
     }
   };
 
+
+var getConditionStatus = function (obj, conditionType) {
+  if (obj && obj.status && obj.status.conditions) {
+    for (let condition of obj.status.conditions) {
+      if (condition['type'] === conditionType) {
+        return condition.status;
+      }
+    }
+  }
+  return 'Unknown';
+};
+
+var isRunningAndReady = function (pod) {
+  return pod && pod.status && pod.status.phase === 'Running' && !pod.metadata.deletionTimestamp &&
+    getConditionStatus(pod, 'Ready') === 'True';
+};
+
+var newPod = function (catset) {
+  return dsPod;
+};
+
+
 module.exports = async function (context) {
   let observed = context.request.body;
-  //let desired = {status: {}, children: []};
-  console.log('all of it: %j', context);
-  console.log('The body: %j', observed);
+  let desired = {status: {}, children: []};
 
-  let dastuff = [ dsSvc, dsPvc, dsPod ];
+  try {
+    let catset = observed.parent;
 
-  //  let observedRS = observed.children['ReplicaSet.extensions/v1beta1'];
+    // Arrange observed Pods by ordinal.
+    let observedPods = {};
+    for (let pod of Object.values(observed.children['Pod.v1'])) {
+      let ordinal = getOrdinal(catset.metadata.name, pod.metadata.name);
+      if (ordinal >= 0) observedPods[ordinal] = pod;
+    }
 
-  //  let service = observed.children['Service.v1'][bgd.spec.service.metadata.name];
+    if (observed.finalizing) {
+      // If the parent is being deleted, scale down to zero replicas.
+      catset.spec.replicas = 0;
+      // Mark the finalizer as done if there are no more Pods.
+      desired.finalized = (Object.keys(observedPods).length == 0);
+    }
 
-  return {status: 200, body: dastuff, headers: {'Content-Type': 'application/json'}};
+    // Compute controller status.
+    for (var ready = 0; ready < catset.spec.replicas && isRunningAndReady(observedPods[ready]); ready++);
+    desired.status = {replicas: Object.keys(observedPods).length, readyReplicas: ready};
+
+    desired.children.push(newPod(catset));
+    desired.children.push(dsSvc);
+
+  } catch (e) {
+    return {status: 500, body: e.stack};
+  }
+
+  return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
 };

@@ -13,8 +13,15 @@ spec:
     resource: pods
     updateStrategy:
       method: Recreate
+  - apiVersion: v1
+    resource: persistentvolumeclaims
+  - apiVersion: v1
+    resource: services
   hooks:
     sync:
+      webhook:
+        url: http://datastore-controller.metacontroller/datastore-controller-sync
+    finalize:
       webhook:
         url: http://datastore-controller.metacontroller/datastore-controller-sync
 ---
