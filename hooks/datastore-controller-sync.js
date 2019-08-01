@@ -213,7 +213,10 @@ const dsPod = {
         {
           "metadata": {
             "name": "datadir",
-            "namespace": "apigee"
+            "namespace": "apigee",
+            "labels" : {
+              "app": "ds"
+            }
           },
           "spec": {
             "accessModes": [
@@ -229,7 +232,10 @@ const dsPod = {
         {
           "metadata": {
             "name": "vardir",
-            "namespace": "apigee"
+            "namespace": "apigee",
+            "labels" : {
+              "app": "ds"
+            }
           },
           "spec": {
             "accessModes": [
