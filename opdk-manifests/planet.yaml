@@ -1,8 +1,0 @@
-apiVersion: apigee.google.com/v1
-kind: planetconfig
-metadata:
-  name: opdkplanet
-  namespace: apigee
-spec:
-  admin_email: opdk@google.com
-  adminpw: Simple123

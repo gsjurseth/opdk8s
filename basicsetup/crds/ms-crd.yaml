@@ -1,15 +1,17 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: datastores.apigee.google.com
+  name: managementservers.apigee.google.com
 spec:
   group: apigee.google.com
   version: v1
   scope: Namespaced
   names:
-    plural: datastores
-    singular: datastore
-    kind: datastore
+    plural: managementservers
+    singular: managementserver
+    kind: managementserver
+  subresources:
+    status: {}
   validation:
     openAPIV3Schema:
       required: ["spec"]
@@ -19,4 +21,4 @@ spec:
           properties:
             replicants:
               type: "integer"
-              minimum: 3
+              minimum: 1

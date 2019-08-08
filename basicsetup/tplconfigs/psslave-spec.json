@@ -1,0 +1,138 @@
+{
+  "apiVersion": "ctl.enisoc.com/v1",
+  "kind": "CatSet",
+  "metadata": {
+    "name": "ps-slave"
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "matchLabels": {
+        "app": "ps-slave"
+      }
+    },
+    "serviceName": "psslavehs",
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "ps-slave"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
+            "name": "apigee-ps-slave",
+            "command" : [
+              "sh",
+              "-c",
+              "sudo mkdir -p /opt/apigee/var/log && sudo chown apigee:apigee /opt/apigee && sudo chown -R apigee:apigee /opt/apigee/var && sudo chmod -R 775 /opt/apigee/var && sudo chown -R apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).psslavehs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p pdb -f /config/cluster.config && sleep 300 && while true ; do sleep 1 ; done" 
+            ],
+            "ports": [
+              {
+                "name": "ssh",
+                "containerPort": 22
+              },
+              {
+                "name": "jmx",
+                "containerPort": 1103
+              },
+              {
+                "name": "cache",
+                "containerPort": 4530
+              },
+              {
+                "name": "qpid-ps-comms",
+                "containerPort": 5432
+              },
+              {
+                "name": "mgmt-containerPort",
+                "containerPort": 8084
+              }
+            ],
+            "volumeMounts": [
+              {
+                "mountPath": "/opt/apigee/data",
+                "name": "datadir"
+              },
+              {
+                "mountPath": "/opt/apigee/var",
+                "name": "vardir"
+              },
+              {
+                "mountPath": "/config",
+                "name": "cluster-config",
+                "readOnly": true
+              },
+              {
+                "mountPath": "/license/license.txt",
+                "name": "license-volume",
+                "readOnly": true,
+                "subPath": "license.txt"
+              }
+            ]
+          }
+        ],
+        "securityContext": {
+          "fsGroup": 998,
+          "runAsUser": 999
+        },
+        "terminationGracePeriodSeconds": 1,
+        "volumes": [
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "cluster-config"
+            },
+            "name": "cluster-config"
+          },
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "apigee-license"
+            },
+            "name": "license-volume"
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "labels": {
+            "app": "ps-slave"
+          },
+          "name": "datadir"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      },
+      {
+        "metadata": {
+          "labels": {
+            "app": "ps-slave"
+          },
+          "name": "vardir"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

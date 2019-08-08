@@ -1,0 +1,141 @@
+{
+  "apiVersion": "ctl.enisoc.com/v1",
+  "kind": "CatSet",
+  "metadata": {
+    "name": "ms"
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "matchLabels": {
+        "app": "ms"
+      }
+    },
+    "serviceName": "mshs",
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "ms"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
+            "name": "apigee-ms",
+            "command" : [
+              "sh",
+              "-c",
+              "sudo mkdir -p /opt/apigee/var/log && sudo chown -R apigee:apigee /opt/apigee /opt/apigee/var /opt/apigee/data && sudo chmod -R 775 /opt/apigee /opt/apigee/var /opt/apigee/data && sudo HOSTIP=\"$(hostname).mshs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /config/cluster.config && while true ; do sleep 1 ; done"
+            ],
+            "readinessProbe": {
+              "exec": {
+                "command": [
+                  "sh",
+                  "-c",
+                  "nestat -anp | fgrep LISTEN | fgrep 8080"
+                ]
+              },
+              "initialDelaySeconds": 240,
+              "timeoutSeconds": 5
+            },
+            "ports": [
+              {
+                "containerPort": 10389,
+                "name": "openldap"
+              },
+              {
+                "containerPort": 8080,
+                "name": "ms-api"
+              },
+              {
+                "containerPort": 9000,
+                "name": "edge-ui"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "mountPath": "/opt/apigee/data",
+                "name": "datadir"
+              },
+              {
+                "mountPath": "/opt/apigee/var",
+                "name": "vardir"
+              },
+              {
+                "mountPath": "/config",
+                "name": "cluster-config",
+                "readOnly": true
+              },
+              {
+                "mountPath": "/license/license.txt",
+                "name": "license-volume",
+                "readOnly": true,
+                "subPath": "license.txt"
+              }
+            ]
+          }
+        ],
+        "securityContext": {
+          "fsGroup": 998,
+          "runAsUser": 999
+        },
+        "terminationGracePeriodSeconds": 1,
+        "volumes": [
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "cluster-config"
+            },
+            "name": "cluster-config"
+          },
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "apigee-license"
+            },
+            "name": "license-volume"
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "labels": {
+            "app": "ms"
+          },
+          "name": "datadir"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      },
+      {
+        "metadata": {
+          "labels": {
+            "app": "ms"
+          },
+          "name": "vardir"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: CompositeController
+metadata:
+  name: managementserver-controller
+  namespace: apigee
+spec:
+  generateSelector: true
+  parentResource:
+    apiVersion: apigee.google.com/v1
+    resource: managementservers
+  childResources:
+  - apiVersion: ctl.enisoc.com/v1
+    resource: catsets
+  - apiVersion: v1
+    resource: services
+  hooks:
+    sync:
+      webhook:
+        url: http://apigee-controller.metacontroller/managementserver-controller-sync

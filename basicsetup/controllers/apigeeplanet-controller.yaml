@@ -1,0 +1,30 @@
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: CompositeController
+metadata:
+  name: apigeeplanet-controller
+  namespace: apigee
+spec:
+  generateSelector: true
+  parentResource:
+    apiVersion: apigee.google.com/v1
+    resource: apigeeplanets
+  childResources:
+  - apiVersion: v1
+    resource: configmaps
+  - apiVersion: apigee.google.com/v1
+    resource: datastores
+  - apiVersion: apigee.google.com/v1
+    resource: managementservers
+  - apiVersion: apigee.google.com/v1
+    resource: qses
+  - apiVersion: apigee.google.com/v1
+    resource: psmasters
+  - apiVersion: apigee.google.com/v1
+    resource: psslaves
+  hooks:
+    sync:
+      webhook:
+        url: http://apigee-controller.metacontroller/apigeeplanet-controller-sync
+    finalize:
+      webhook:
+        url: http://apigee-controller.metacontroller/apigeeplanet-controller-sync

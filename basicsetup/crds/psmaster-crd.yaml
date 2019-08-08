@@ -1,25 +1,24 @@
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: planetconfigs.apigee.google.com
+  name: psmasters.apigee.google.com
 spec:
   group: apigee.google.com
   version: v1
   scope: Namespaced
   names:
-    plural: planetconfigs
-    singular: planetconfig
-    kind: planetconfig
+    plural: psmasters
+    singular: psmaster
+    kind: psmaster
+  subresources:
+    status: {}
   validation:
     openAPIV3Schema:
       required: ["spec"]
       properties:
         spec:
-          required: ["admin_email","adminpw"]
+          required: ["replicants"]
           properties:
-            admin_email:
-              type: "string"
-              minimum: 1
-            adminpw:
-              type: "string"
+            replicants:
+              type: "integer"
               minimum: 1

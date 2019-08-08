@@ -1,0 +1,22 @@
+{
+  "name": "hooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "apigeeplanet-controller-sync.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "chai": "^4.2.0",
+    "properties-reader": "^0.3.1"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0",
+    "rewire": "^4.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
