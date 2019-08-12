@@ -10,7 +10,6 @@
           "generation": 1,
           "creationTimestamp": "2019-08-08T08:01:47Z",
           "annotations": {
-            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"metacontroller.k8s.io/v1alpha1\",\"kind\":\"CompositeController\",\"metadata\":{\"annotations\":{},\"name\":\"apigeeplanet-controller\"},\"spec\":{\"childResources\":[{\"apiVersion\":\"v1\",\"resource\":\"configmaps\"},{\"apiVersion\":\"apigee.google.com/v1\",\"resource\":\"datastores\"},{\"apiVersion\":\"apigee.google.com/v1\",\"resource\":\"managementservers\"},{\"apiVersion\":\"apigee.google.com/v1\",\"resource\":\"qses\"},{\"apiVersion\":\"apigee.google.com/v1\",\"resource\":\"psmasters\"},{\"apiVersion\":\"apigee.google.com/v1\",\"resource\":\"psslaves\"}],\"generateSelector\":true,\"hooks\":{\"finalize\":{\"webhook\":{\"url\":\"http://apigee-controller.metacontroller/apigeeplanet-controller-sync\"}},\"sync\":{\"webhook\":{\"url\":\"http://apigee-controller.metacontroller/apigeeplanet-controller-sync\"}}},\"parentResource\":{\"apiVersion\":\"apigee.google.com/v1\",\"resource\":\"apigeeplanets\"}}}\n"
           }
         },
         "spec": {
@@ -19,30 +18,6 @@
             "resource": "apigeeplanets"
           },
           "childResources": [
-            {
-              "apiVersion": "v1",
-              "resource": "configmaps"
-            },
-            {
-              "apiVersion": "apigee.google.com/v1",
-              "resource": "datastores"
-            },
-            {
-              "apiVersion": "apigee.google.com/v1",
-              "resource": "managementservers"
-            },
-            {
-              "apiVersion": "apigee.google.com/v1",
-              "resource": "qses"
-            },
-            {
-              "apiVersion": "apigee.google.com/v1",
-              "resource": "psmasters"
-            },
-            {
-              "apiVersion": "apigee.google.com/v1",
-              "resource": "psslaves"
-            }
           ],
           "hooks": {
             "sync": {
@@ -65,7 +40,6 @@
         "kind": "apigeeplanet",
         "metadata": {
           "annotations": {
-            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apigee.google.com/v1\",\"kind\":\"apigeeplanet\",\"metadata\":{\"annotations\":{},\"name\":\"opdkplanet\",\"namespace\":\"apigee\"},\"spec\":{\"admin_email\":\"opdk@google.com\",\"adminpw\":\"Simple1234\"}}\n"
           },
           "creationTimestamp": "2019-08-08T08:02:51Z",
           "finalizers": [
@@ -84,12 +58,12 @@
         }
       },
       "children": {
-        "ConfigMap.v1": {},
-        "datastore.apigee.google.com/v1": {},
-        "managementserver.apigee.google.com/v1": {},
-        "psmaster.apigee.google.com/v1": {},
-        "psslave.apigee.google.com/v1": {},
-        "qs.apigee.google.com/v1": {}
+        "ConfigMap.v1": { "cluster-config": {} },
+        "datastore.apigee.google.com/v1": { "opdkds" : {} },
+        "managementserver.apigee.google.com/v1": { "opdkms" : {} },
+        "psmaster.apigee.google.com/v1": { "opdkpsmaster" : {} },
+        "psslave.apigee.google.com/v1": { "opdkpsslave" : {} },
+        "qs.apigee.google.com/v1": { "opdkqs" : {} }
       },
       "finalizing": false
     }

@@ -30,6 +30,14 @@
               "-c",
               "sudo mkdir -p /opt/apigee/var/log && sudo chown apigee:apigee /opt/apigee && sudo chown -R apigee:apigee /opt/apigee/var && sudo chmod -R 775 /opt/apigee/var && sudo chown -R apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).psmasterhs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ps -f /config/cluster.config && while true ; do sleep 1 ; done" 
             ],
+            "readinessProbe": {
+              "tcpSocket": {
+                "port": 8084
+              },
+              "initialDelaySeconds": 120,
+              "periodSeconds": 30,
+              "timeoutSeconds": 2
+            },
             "ports": [
               {
                 "name": "ssh",

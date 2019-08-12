@@ -15,7 +15,14 @@ limitations under the License.
 */
 
 const pr = require('properties-reader');
-const listOfChildren =  ["ConfigMap.v1","datastore.apigee.google.com/v1"];
+/*
+const listOfChildren = [ "ConfigMap.v1", "datastore.apigee.google.com/v1",
+    "managementserver.apigee.google.com/v1", "qs.apigee.google.com/v1" ];
+    */
+
+const listOfChildren = [ "ConfigMap.v1", "datastore.apigee.google.com/v1",
+    "managementserver.apigee.google.com/v1", "qs.apigee.google.com/v1",
+    "psmaster.apigee.google.com/v1", "psslave.apigee.google.com/v1" ];
 
 Object.prototype.isEmpty = function() {
     for(var key in this) {
@@ -120,22 +127,27 @@ const finalize = function(observed,desired) {
 
 }
 
+const getKid = function(o) {
+  let kid = Object.keys(o)[0];
+  return kid;
+}
+
 const calculateStatus = function(children) {
   let allstatus = {};
-  let listOfChildren = [ "ConfigMap.v1", "datastore.apigee.google.com/v1",
-    "managementserver.apigee.google.com/v1", "psmaster.apigee.google.com/v1",
-    "psslave.apigee.google.com/v1", "qs.apigee.google.com/v1" ];
-
 
   // set everything to ready: false by default
   listOfChildren.forEach( i => { 
-    if ( children[i].status != null ) {
-      if ( i === 'ConfigMap.v1' )
-        allstatus[i] = { ready: true };
-      allstatus[i] = children[i].status;
+    if ( children[i].isEmpty() ) {
+      allstatus[i] = { ready: false };
+    }
+    else if ( i === "ConfigMap.v1" ) {
+      allstatus[i] = { ready: true };
+    }
+    else if (children[i][ getKid(children[i]) ].status != null) {
+      allstatus[i] = children[i][ getKid(children[i]) ].status;
     }
     else {
-      allstatus[i] = { ready: false };
+      allstatus[i] = {ready: false};
     }
   });
 
@@ -153,55 +165,44 @@ module.exports = async function (context) {
     let children = observed.children;
     let planetstatus = false;
 
+    //the previous thing maps to the next thing so we can sequentially add it all
+    const listOfSpecs = {
+      "ConfigMap.v1": newDS(),
+      "datastore.apigee.google.com/v1":newMS(),
+      "managementserver.apigee.google.com/v1":newQS(),
+      "qs.apigee.google.com/v1":newPSMaster(),
+      "psmaster.apigee.google.com/v1":newPSSlave()
+    };
+
     status = calculateStatus(children);
 
+    console.log('mystatus: %j', status);
     if (observed.finalizing) {
+      console.log('Finalizing...');
       return finalize(observed,desired);
     }
 
-    console.log('our beloved kids: %j', children);
-
     desired.children.push( newCM(apigeeplanet) )
-
-    // return immediately if we don't even have the configmap for the cluster config
-    if (!status['ConfigMap.v1'].ready) {
-      return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
+    for(a in listOfChildren) {
+      let name = listOfChildren[a];
+      if (status[name] && !status[name].isEmpty() && name === "datastore.apigee.google.com/v1") {
+        desired.children.push( listOfSpecs[name] )
+      }
+      else if (status[name] && !status[name].isEmpty() && status[name].ready) {
+        desired.children.push( listOfSpecs[name] )
+      }
     }
 
-    // now for datastore if not already there
-    if ( status['ConfigMap.v1'].ready && !status['datastore.apigee.google.com/v1'].ready ) {
-      desired.children.push( newDS() )
-      return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
-    }
-
-    desired.children.push( newDS() )
-    // if datastore ready then add ms if not already there
-    if ( status['datastore.apigee.google.com/v1'].ready && 
-      !status['managementserver.apigee.google.com/v1'].ready) {
-      desired.children.push( newMS() )
-      return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
-    }
-
-    // now for the management server
-    desired.children.push( newMS() )
-
-    // now add QS and PSMaster if they're not there already
-    if ( status['datastore.apigee.google.com/v1'].ready && 
-      status['managementserver.apigee.google.com/v1'].ready) {
-      desired.children.push( newQS() )
-      desired.children.push( newPSMaster() )
-    }
-
-    // now add QS and PSMaster if they're not there already
-    // add the slave if not already there
-    if ( status['psmaster.apigee.google.com/v1'].ready  ) {
-      desired.children.push( newPSSlave() )
+    /*
+    if (status['psslave.apigee.google.com/v1']) {
       planetstatus = true;
-    }
 
+    }
+    */
     desired.status = { members: status, planet: planetstatus };
   }
   catch(e) {
+    console.log('zoinks! : %j', e.stack);
     return {status: 500, body: e.stack};
   }
 

@@ -31,15 +31,12 @@
               "sudo mkdir -p /opt/apigee/var/log && sudo chown -R apigee:apigee /opt/apigee /opt/apigee/var /opt/apigee/data && sudo chmod -R 775 /opt/apigee /opt/apigee/var /opt/apigee/data && sudo HOSTIP=\"$(hostname).mshs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ms -f /config/cluster.config && while true ; do sleep 1 ; done"
             ],
             "readinessProbe": {
-              "exec": {
-                "command": [
-                  "sh",
-                  "-c",
-                  "nestat -anp | fgrep LISTEN | fgrep 8080"
-                ]
+              "tcpSocket": {
+                "port": 9000
               },
-              "initialDelaySeconds": 240,
-              "timeoutSeconds": 5
+              "initialDelaySeconds": 210,
+              "periodSeconds": 30,
+              "timeoutSeconds": 2
             },
             "ports": [
               {

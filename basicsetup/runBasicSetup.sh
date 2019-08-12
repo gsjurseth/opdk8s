@@ -67,8 +67,8 @@ function cleanApigee() {
   kubectl -n metacontroller delete cm hooks
   kubectl -n metacontroller delete cm tplconfigs
   kubectl -n apigee delete svc --all
-  kubectl -n apigee delete pvc --all
   kubectl -n apigee delete pv --all
+  kubectl -n apigee delete pvc --all
   kubectl delete -f $BASE/crds
   kubectl delete ns apigee
 }

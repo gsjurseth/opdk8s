@@ -50,6 +50,6 @@ module.exports = async function (context) {
     return {status: 500, body: e.stack};
   }
 
-  console.log('-----The qs status: %j', desired.status);
+  console.log('managementserver status: %j', desired.status);
   return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
 };
