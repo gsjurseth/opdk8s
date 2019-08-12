@@ -2,7 +2,8 @@
   "apiVersion": "ctl.enisoc.com/v1",
   "kind": "CatSet",
   "metadata": {
-    "name": "ds"
+    "name": "ds",
+    "namespace": "apigee"
   },
   "spec": {
     "replicas": 3,
@@ -17,7 +18,8 @@
       "metadata": {
         "labels": {
           "app": "ds"
-        }
+        },
+        "namespace": "apigee"
       },
       "spec": {
         "containers": [
@@ -111,7 +113,8 @@
           "labels": {
             "app": "ds"
           },
-          "name": "datadir"
+          "name": "datadir",
+          "namespace": "apigee"
         },
         "spec": {
           "accessModes": [
@@ -129,7 +132,8 @@
           "labels": {
             "app": "ds"
           },
-          "name": "vardir"
+          "name": "vardir",
+          "namespace": "apigee"
         },
         "spec": {
           "accessModes": [

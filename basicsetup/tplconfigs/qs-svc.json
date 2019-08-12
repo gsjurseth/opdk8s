@@ -24,7 +24,7 @@
           "port": 5672
         },
         {
-          "name": "qpid-mgmt-port",
+          "name": "qpid-mgmt",
           "port": 8083
         }
       ],

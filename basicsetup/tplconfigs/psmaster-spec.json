@@ -2,7 +2,8 @@
   "apiVersion": "ctl.enisoc.com/v1",
   "kind": "CatSet",
   "metadata": {
-    "name": "ps-master"
+    "name": "ps-master",
+    "namespace": "apigee"
   },
   "spec": {
     "replicas": 1,
@@ -16,7 +17,8 @@
       "metadata": {
         "labels": {
           "app": "ps-master"
-        }
+        },
+        "namespace": "apigee"
       },
       "spec": {
         "containers": [
@@ -46,7 +48,7 @@
                 "containerPort": 5432
               },
               {
-                "name": "mgmt-containerPort",
+                "name": "mgmt-port",
                 "containerPort": 8084
               }
             ],
@@ -102,7 +104,8 @@
           "labels": {
             "app": "ps-master"
           },
-          "name": "datadir"
+          "name": "datadir",
+          "namespace": "apigee"
         },
         "spec": {
           "accessModes": [
@@ -120,7 +123,8 @@
           "labels": {
             "app": "ps-master"
           },
-          "name": "vardir"
+          "name": "vardir",
+          "namespace": "apigee"
         },
         "spec": {
           "accessModes": [

@@ -18,7 +18,7 @@ describe('Testing apigeeplanet-controller', () => {
   });
 
   it('Should return specs cm(cluster-config) && ds()', async () => {
-    apigeeplanetData.request.body.children['ConfigMap.v1'].status = { ready: true };
+    apigeeplanetData.request.body.children['ConfigMap.v1'] = { notempty: true };
 
     let res = await apigeeplanetController(apigeeplanetData);
     expect(res.body.children[0].metadata.name).to.equal('cluster-config');
@@ -26,7 +26,7 @@ describe('Testing apigeeplanet-controller', () => {
   });
 
   it('Should return specs cm(cluster-config) && ds() && ms()', async () => {
-    apigeeplanetData.request.body.children['ConfigMap.v1'].status = { ready: true };
+    apigeeplanetData.request.body.children['ConfigMap.v1'] = { notempty: true };
     apigeeplanetData.request.body.children['datastore.apigee.google.com/v1'].status = { ready: true };
 
     let res = await apigeeplanetController(apigeeplanetData);
@@ -35,10 +35,23 @@ describe('Testing apigeeplanet-controller', () => {
     expect(res.body.children[2].kind).to.equal('managementserver');
   });
 
-  it('Should return specs cm(cluster-config) && ds() && ms() && qs && psmaster', async () => {
-    apigeeplanetData.request.body.children['ConfigMap.v1'].status = { ready: true };
+  it('Should return specs cm(cluster-config) && ds() && ms() && qs ', async () => {
+    apigeeplanetData.request.body.children['ConfigMap.v1'] = { notempty: true };
     apigeeplanetData.request.body.children['datastore.apigee.google.com/v1'].status = { ready: true };
     apigeeplanetData.request.body.children['managementserver.apigee.google.com/v1'].status = { ready: true };
+
+    let res = await apigeeplanetController(apigeeplanetData);
+    expect(res.body.children[0].metadata.name).to.equal('cluster-config');
+    expect(res.body.children[1].kind).to.equal('datastore');
+    expect(res.body.children[2].kind).to.equal('managementserver');
+    expect(res.body.children[3].kind).to.equal('qs');
+  });
+
+  it('Should return specs cm(cluster-config) && ds() && ms() && qs ', async () => {
+    apigeeplanetData.request.body.children['ConfigMap.v1'] = { notempty: true };
+    apigeeplanetData.request.body.children['datastore.apigee.google.com/v1'].status = { ready: true };
+    apigeeplanetData.request.body.children['managementserver.apigee.google.com/v1'].status = { ready: true };
+    apigeeplanetData.request.body.children['qs.apigee.google.com/v1'].status = { ready: true };
 
     let res = await apigeeplanetController(apigeeplanetData);
     expect(res.body.children[0].metadata.name).to.equal('cluster-config');
@@ -49,7 +62,7 @@ describe('Testing apigeeplanet-controller', () => {
   });
   
   it('Should return specs cm(cluster-config) && ds() && ms() && qs && psmaster && psslave', async () => {
-    apigeeplanetData.request.body.children['ConfigMap.v1'].status = { ready: true };
+    apigeeplanetData.request.body.children['ConfigMap.v1'] = { notempty: true };
     apigeeplanetData.request.body.children['datastore.apigee.google.com/v1'].status = { ready: true };
     apigeeplanetData.request.body.children['managementserver.apigee.google.com/v1'].status = { ready: true };
     apigeeplanetData.request.body.children['qs.apigee.google.com/v1'].status = { ready: true };

@@ -2,7 +2,8 @@
   "apiVersion": "ctl.enisoc.com/v1",
   "kind": "CatSet",
   "metadata": {
-    "name": "ms"
+    "name": "ms",
+    "namespace": "apigee"
   },
   "spec": {
     "replicas": 1,
@@ -16,7 +17,8 @@
       "metadata": {
         "labels": {
           "app": "ms"
-        }
+        },
+        "namespace": "apigee"
       },
       "spec": {
         "containers": [
@@ -105,7 +107,8 @@
           "labels": {
             "app": "ms"
           },
-          "name": "datadir"
+          "name": "datadir",
+          "namespace": "apigee"
         },
         "spec": {
           "accessModes": [
@@ -123,7 +126,8 @@
           "labels": {
             "app": "ms"
           },
-          "name": "vardir"
+          "name": "vardir",
+          "namespace": "apigee"
         },
         "spec": {
           "accessModes": [
