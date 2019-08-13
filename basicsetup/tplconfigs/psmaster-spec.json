@@ -2,21 +2,21 @@
   "apiVersion": "ctl.enisoc.com/v1",
   "kind": "CatSet",
   "metadata": {
-    "name": "ps-master",
+    "name": "psmaster",
     "namespace": "apigee"
   },
   "spec": {
     "replicas": 1,
     "selector": {
       "matchLabels": {
-        "app": "ps-master"
+        "app": "psmaster"
       }
     },
     "serviceName": "psmasterhs",
     "template": {
       "metadata": {
         "labels": {
-          "app": "ps-master"
+          "app": "psmaster"
         },
         "namespace": "apigee"
       },
@@ -24,7 +24,7 @@
         "containers": [
           {
             "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
-            "name": "apigee-ps-master",
+            "name": "apigee-psmaster",
             "command" : [
               "sh",
               "-c",
@@ -110,7 +110,7 @@
       {
         "metadata": {
           "labels": {
-            "app": "ps-master"
+            "app": "psmaster"
           },
           "name": "datadir",
           "namespace": "apigee"
@@ -129,7 +129,7 @@
       {
         "metadata": {
           "labels": {
-            "app": "ps-master"
+            "app": "psmaster"
           },
           "name": "vardir",
           "namespace": "apigee"

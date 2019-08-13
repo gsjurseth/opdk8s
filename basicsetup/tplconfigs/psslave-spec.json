@@ -2,21 +2,21 @@
   "apiVersion": "ctl.enisoc.com/v1",
   "kind": "CatSet",
   "metadata": {
-    "name": "ps-slave",
+    "name": "psslave",
     "namespace": "apigee"
   },
   "spec": {
     "replicas": 1,
     "selector": {
       "matchLabels": {
-        "app": "ps-slave"
+        "app": "psslave"
       }
     },
     "serviceName": "psslavehs",
     "template": {
       "metadata": {
         "labels": {
-          "app": "ps-slave"
+          "app": "psslave"
         },
         "namespace": "apigee"
       },
@@ -24,7 +24,7 @@
         "containers": [
           {
             "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
-            "name": "apigee-ps-slave",
+            "name": "apigee-psslave",
             "command" : [
               "sh",
               "-c",
@@ -102,7 +102,7 @@
       {
         "metadata": {
           "labels": {
-            "app": "ps-slave"
+            "app": "psslave"
           },
           "name": "datadir",
           "namespace": "apigee"
@@ -121,7 +121,7 @@
       {
         "metadata": {
           "labels": {
-            "app": "ps-slave"
+            "app": "psslave"
           },
           "name": "vardir",
           "namespace": "apigee"

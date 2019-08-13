@@ -38,7 +38,6 @@ module.exports = async function (context) {
     desired.status = msStatus;
 
     if (observed.finalizing) {
-      console.log('our children while finalizing: %j', Object.keys(observed.children));
       desired.children = [];
       return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
     }
@@ -50,6 +49,5 @@ module.exports = async function (context) {
     return {status: 500, body: e.stack};
   }
 
-  console.log('managementserver status: %j', desired.status);
   return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
 };

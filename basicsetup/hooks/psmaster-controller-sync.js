@@ -30,7 +30,7 @@ module.exports = async function (context) {
       children['CatSet.ctl.enisoc.com/v1'].psmaster.status != null &&
       children['CatSet.ctl.enisoc.com/v1'].psmaster.status.readyReplicas != null ) {
       let catsetStatus = children['CatSet.ctl.enisoc.com/v1'].psmaster.status;
-      if ( children['CatSet.ctl.enisoc.com/v1']['psmaster']['status'].readyReplicas === psmaster.spec.replicants) {
+      if ( catsetStatus.readyReplicas === psmaster.spec.replicants) {
         psmasterStatus = {ready: true};
       }
     }
@@ -38,7 +38,6 @@ module.exports = async function (context) {
     desired.status = psmasterStatus;
 
     if (observed.finalizing) {
-      console.log('our children while finalizing: %j', Object.keys(observed.children));
       desired.children = [];
       return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
     }
@@ -50,6 +49,5 @@ module.exports = async function (context) {
     return {status: 500, body: e.stack};
   }
 
-  console.log('-----The psmaster status: %j', desired.status);
   return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
 };

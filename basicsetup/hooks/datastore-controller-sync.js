@@ -38,27 +38,17 @@ module.exports = async function (context) {
     desired.status = dsStatus;
 
     if (observed.finalizing) {
-      console.log('our children while finalizing: %j', Object.keys(observed.children));
       desired.children = [];
       return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
     }
 
     desired.children.push(dsSpec);
     desired.children.push(dsSvc);
-    /*
-    if (!observed.children['Service']) {
-      desired.children.push(dsSvc);
-    }
-    else {
-      console.log('our children (in the not-observed): %j', Object.keys(observed.children));
-    }
-    */
 
   }
   catch (e) {
     return {status: 500, body: e.stack};
   }
 
-  console.log('datastore status: %j', desired.status);
   return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
 };

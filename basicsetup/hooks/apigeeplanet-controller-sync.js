@@ -176,7 +176,6 @@ module.exports = async function (context) {
 
     status = calculateStatus(children);
 
-    console.log('mystatus: %j', status);
     if (observed.finalizing) {
       console.log('Finalizing...');
       return finalize(observed,desired);
@@ -206,6 +205,6 @@ module.exports = async function (context) {
     return {status: 500, body: e.stack};
   }
 
-  return {status: 200, body: desired, headers: {'Content-Type': 'application/json'}};
+  return {status: 200, body: desired, resyncAfterSeconds: 10, headers: {'Content-Type': 'application/json'}};
 
 };

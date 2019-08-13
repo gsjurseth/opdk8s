@@ -33,7 +33,7 @@
         }
       ],
       "selector": {
-        "app": "ps-slave"
+        "app": "psslave"
       }
     }
 }
