@@ -22,12 +22,13 @@ Object.prototype.isEmpty = function() {
     return true;
 }
 
-const pr    = require('properties-reader'),
-      _     = require('lodash'),
-      fetch = require('node-fetch');
+const pr                = require('properties-reader'),
+      _                 = require('lodash'),
+    { URLSearchParams } = require('url'),
+      fetch             = require('node-fetch');
 
 const listOfChildren = [ "router.apigee.google.com/v1", 
-  "environment.apigee.google.com/v1" ];
+  "env.apigee.google.com/v1" ];
 
 
 const props = pr('/config/cluster.config');
@@ -35,7 +36,7 @@ const props = pr('/config/cluster.config');
 const msProps = {
   user: props.get('ADMIN_EMAIL'),
   pass: props.get('APIGEE_ADMINPW'),
-  url: 'mshs.apigee.svc.cluster.local',
+  url: 'http://mshs.apigee.svc.cluster.local:8080',
   region: props.get('REGION'),
   pod: props.get('MP_POD')
 };
@@ -68,50 +69,92 @@ const getKid = function(o) {
   return kid;
 }
 
-const checkForOrg = function(org) {
-  return http.request( `${msProps.url}/organizations/${org}`, {
-    auth: `${msProps.user}:${msProps.pass}`
-    },
-    res => {
-      if ( res.statusCode === 200 ) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
-  );
-}
-
-const addOrg = async function(org) {
+const checkForOrg = async function(org) {
   let h = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Authorization': 'Basic ' + Buffer.from(`${msProps.user}:${msProps.pass}`).toString('base64')
-  }
+  };
   let opts = {
     method: 'POST',
     headers: h,
     body: JSON.stringify( newOrgBody(org) )
   };
-  return await fetch(`${msProps.url}/v1/organizations`,opts)
-    .then( res => {
-      return res.ok;
-    })
-    .then( () => {
-      opts.body = { region: msProps.region, pod: msProps.pod };
-      return fetch(`${msProps.url}/v1/organizations/${org}/pods`, opts)
-    })
-    .then( res => {
-      return res.ok;
-    })
-    .then( () => {
-      delete(opts.body);
-      return fetch( `${msProps.url}/v1/organizations/${org}/userroles/orgadmin/users?id=${msProps.user}`, opts );
-    })
-    .then( res => {
-      return res.ok;
+  let url = `${msProps.url}/organizations/${org}`;
+  console.log('about to check for org: %s', url);
+  const res = await fetch(`${msProps.url}/organizations/${org}`,opts);
+  //const json = await res.json();
+  const ok = res.ok;
+  console.log('the whole response we got back was: %j', res);
+  return ok;
+}
+
+
+const addUsersToOrg = async function(org) {
+  let h = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json',
+    'Authorization': 'Basic ' + Buffer.from(`${msProps.user}:${msProps.pass}`).toString('base64')
+  };
+  let opts = {
+    method: 'POST',
+    headers: h
+  };
+  let encEmail = encodeURIComponent(msProps.user);
+  let url = `${msProps.url}/v1/organizations/${org}/userroles/orgadmin/users?id=${encEmail}`;
+  console.log('about to add user to role with url: %s', url);
+  await fetch( `${url}`, opts )
+    .catch( e => {
+      throw new Error("Failed adding orgadmin: " + e.stack);
     });
+}
+
+const associateOrg = async function(org) {
+  let h = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json',
+    'Authorization': 'Basic ' + Buffer.from(`${msProps.user}:${msProps.pass}`).toString('base64')
+  };
+  let opts = {
+    method: 'POST',
+    headers: h
+  };
+  let params = new URLSearchParams();
+  params.append( 'region', msProps.region );
+  params.append( 'pod', msProps.pod );
+
+  opts.body = params;
+  let url = `${msProps.url}/v1/organizations/${org}/pods`;
+  console.log('about to add org pod and region with url: %s', url);
+  await fetch(`${url}`, opts)
+    .catch( e => {
+      throw new Error("Failed associating org: " + e.stack);
+    });
+}
+
+const createOrg = async function(org) {
+  let h = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Basic ' + Buffer.from(`${msProps.user}:${msProps.pass}`).toString('base64')
+  };
+  let opts = {
+    method: 'POST',
+    headers: h,
+    body: JSON.stringify( newOrgBody(org) )
+  };
+  let url = `${msProps.url}/v1/organizations`;
+  console.log('about to add org with url: %s', url);
+  await fetch(`${url}`,opts)
+    .catch( e => {
+      throw new Error("Failed creating org: " + e.stack);
+    });
+}
+
+const addOrg = async function(org) { 
+  await createOrg(org);
+  await associateOrg(org);
+  await addUsersToOrg(org);
 }
 
 // we've passed in the org name so we can check wrt this org alone
@@ -119,8 +162,8 @@ const addOrg = async function(org) {
 // only the ones associated with this particular org... We will not store
 // the org name in status for the routers, but we will store the org status itself
 // and check if it's already been created
-const calculateStatus = function(observed) {
-  let allstatus = {};
+const calculateStatus = async function(observed) {
+  let allstatus = { org: {} };
   let children = observed.children;
   let parent = observed.parent;
   let org = parent.metadata.name;
@@ -141,7 +184,8 @@ const calculateStatus = function(observed) {
   });
 
   if ( allstatus['router.apigee.google.com/v1'].ready ) {
-    allstatus.org[ org ] = { ready: checkForOrg(org) }
+    let orgReady = checkForOrg(org);
+    allstatus.org[ org ] = orgReady;
   }
 
   return allstatus;
@@ -155,14 +199,15 @@ module.exports = async function (context) {
   let children = observed.children;
   let org = parent.metadata.name;
 
-  console.log('the children: %j', children);
-
   try {
-    let status = calculateStatus(observed);
+    let status = await calculateStatus(observed);
 
+    console.log('so the status is: %j', status);
     if (status['router.apigee.google.com/v1'].ready) {
       if ( !status.org[ org ].ready ) {
-        addOrg(org);
+        console.log('now we are gonna try and add the org: %s', org);
+        await addOrg(org);
+        console.log('after we have added the org');
       }
       else {
         orgStatus.ready = true;

@@ -12,7 +12,7 @@ spec:
   - apiVersion: apigee.google.com/v1
     resource: routers
   - apiVersion: apigee.google.com/v1
-    resource: environments
+    resource: envs
   hooks:
     sync:
       webhook:
