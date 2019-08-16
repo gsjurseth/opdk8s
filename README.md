@@ -1,141 +1,98 @@
-# Initial experiments to get opdk running
-so basically I did the following
+# OPDK8S
+This is an attempt to create a robust and easy setup for running apigee opdk inside of kubernets
 
- * built a docker with apigee-setup installed and ready
- * published said docker to my project gcr
- * created a cluster with 5 nodes
- * created a spec which updates some requirements (lower the mem and cpu reqs for ZK)
- * deployed a stateful set and watched
---- updates
- * added a few more configmaps to handle license file and an org config file
- * changed profile to ds: this is now working
- * added a sts for profile ms which is now working
- * added rmp
- * added analytics
- * added ingress and tested
- * wrote a daemon to watch for zookeeper events
- * tested that I could kill datastore nodes indescriminately and see if everything would come back
+# Prerequisites
+There are, alas, a few requirements before you can just get up and running. This software is, after all, licensed and so you'll need to build the docker images and then update the image location in all of the spec files.
 
-# TODO
- * setup management server and rmp's to rely on the service for the datastore nodes instead of the individual nodes
- * setup slave ps-servers and use a service for them as well
+## A k8s cluster
+This should go without saying, really... You're going to need a k8s cluster to make this work. I recommend at a minimum using a 3-node cluster with 4core and 16gb of ram per node.
 
-# Playbooks
-Here i've setup a couple of quick start play books to get this up and running in your own gke-cluster quickly.
+## Building the docker images
+In addition to building the apigee docker image you'll also need to build a custom metacontroller-nodejs image. I'm using nodejs for all of the operator-controllers and have added a few npm-libs to make development easier.
 
-## Spin up a working environment
-Quick play book to get everything up and running. For my own environment i'm using an nginx-ingress (in ingress-manifests) that's configured to use hostnames i've registered at freedns: ui|apiprod|apims.evils.in. You can create your own ingress at the very end of the setup but you'll need to have your own DNS to make it work. I've not included those instructions here as they really have nothing to do with Apigee. At a later time I may add that info and even automate some of it as well.
+### The nodejs docker image
+I've copied the metacontroller nodejs examle into my own repository here and updated it just a bit to get it working.
 
-For any of this you can watch them by looking at the logs like this for example:
-
-`kubectl logs -f ds-0`
-
-### Docker
-So, I had to build the docker with the docker file you see below. I used this command to do so:
+So let's first go to where this is:
 ```bash
+cd images/nodejs
+```
+
+You'll want to update the Makefile. Set the version (if it's your first time you can set it 0.1) and container registry as appropriate.
+
+To get this setup you'll be able to simply do the following:
+```bash
+make push
+```
+
+That should build, tag, and push it to where it belongs. Now update this spec with the appropriate url and version:
+`basicsetup/controllers/controller-deployment.yaml`
+
+### The apigee docker image
+Now we can update this image. The docker build process will copy over a simple zookeeper daemon into the image and download and setup the bootstrap for the apigee installation. Doing the following should get you setup.
+
+NOTE: You'll need to enter your own user and pass as these are passed to the bootstrap script to get everything setup
+
+```bash
+cd images/apigee-opdk
 docker build -t apigee-ds . --build-arg user=<userUser> --build-arg pass=<yourPass>
 ```
 
-With that done I gat it and upload it to gcr like so:
+With that done we can tag and upload to the gcr (you'll need to update this with your own details):
+
 ```bash
 docker tag apigee-opdk eu.gcr.io/gsj-k8s-training/apigee-opdk:6
 docker push eu.gcr.io/gsj-k8s-training/apigee-opdk:6
 ```
 
-### Update the spec files in `opdk-manifests`
-In this example it's just version `6`. If you've built this and deployed it gcr on your own you'll need to update he specs with the image as outlined above
+Finally, with all this done you're going to need to update the image in all spec.json files located here:
 
+`basicsetup/tplconfigs`
 
-### Move on the kube bits
-First we need to create all the configmaps that the installation an registration process uses as scripts
+I realize this part sucks... This is low hanging fruit for easy improvement for someone so inclined.
+
+## The license
+This setup needs a license file. Get yours and make note of the file location. We're going to use when we setup the planet.
+
+# Playbooks
+I've divided this into two sections: the planet itself and the org (plus all environments). At this point and time only the planet is finished. The org is coming along quickly, however, and I expect to have it done in the coming days.
+
+## Setup the basics
+To make this as easy as possible i've included a setup script that should do nearly all the work. So, to get this kicked off you'll need to run the following and replace `license.txt` with the path to your own license file.
+
 ```bash
-kubectl create configmap deregister-rmp --from-file=deRegisterRMP.sh
-kubectl create configmap opdk-ds-cluster.config --from-file=opdk-ds-cluster.config
-kubectl create configmap register-rmp --from-file=registerRMP.sh
-kubectl create configmap org.config --from-file=org.config
+basicsetup/runBasicSetup.sh -u <yourk8suser> -d <yourk8sdomain> -l license.txt -c setup-all
 ```
 
-Second ... well, really it's another config map. But you need to use your own license file which i've obviously not included here
+This will create all metacontroller pieces, create the apigee ns, all controllers needed for apigee, and even create a configmap for your license file. With this in place you can now create a planet.
+
+## Creating a planet
+Finally, we can create our planet. Edit the file in `concreteApigeePlanet/apigeeplanet.yaml` and set your admin-user and pass as appropriate. Now apply that file:
+
 ```bash
-kubectl create configmap license.config --from-file=</path/to/license.txt>
+kubectl apply -n apigee -f concreateApigeePlanet/apigeeplanet.yaml
 ```
 
-### The datastore (about 5 minutes)
-A stateful set. you can use the log statements listed below to keep track of them. The last thing that happens is that the datastore runs the Zookeeper Keeper whose job it is to bounce zookeeper whenever one of them goes down and has to come up again.
+You can monitor the status of bits and pieces coming up by simply grabbing the pods from the apigee name space like so
+
 ```bash
-kubectl apply -f opdk-manifests/ds.yaml
-## and now watch them until they've all come up like so ...
-kubectl logs -f ds-0
-kubectl logs -f ds-1
-kubectl logs -f ds-2
+kubectl -n apigee get pods
 ```
 
-### Managment Server (about 5 minutes)
-Once that's done we can spin up the management server
+# Development
+Most of the work for development is really done through the controllers themselves
+
+## The hooks
+You'll notice that there is a `src` directory here. I've symlinked the hooks from `basicsetup/hooks/*.js` so that we can build tests with chai/mocha here. This makes it much easier to try and work on logic for the controllers themselves (and they're what's really doing all the work).
+
+## Trying out new things
+Once this is done you don't have to tear everything down again. You can actually update the hooks and controllers by simply running the following:
+
 ```bash
-kubectl apply -f opdk-manifests/ms.yaml
-## and now watch it while it comes up
-kubectl logs -f ms-0
+basicsetup/runBasicSetup.sh -u <yourk8suser> -d <yourk8sdomain> -l license.txt -c update-hooks
 ```
 
-### The RMPs (2 mins)
-Now let's setup the RMPs
-```bash
-kubectl apply -f opdk-manifests/rmp-no-sts.yaml
-```
+this will recreate the controllers, crds, and hooks without actually removing your planet.
 
-### QPID (2 mins)
-Qpidd
-```bash
-kubectl apply -f opdk-manifests/qs.yaml
-```
-
-### Postgres (this part needs to be done in steps)
-For postgres we have to do things in an odd order to get it all straight.
-We start with the postgres **slave**
-```bash
-kubectl apply -f opdk-manifests/ps-slave.yaml
-```
-That sets up a postgres alone instance via the `pdb` profile.
-
-Now we can move on to the master
-```bash
-kubectl apply -f opdk-manifests/ps-master.yaml
-```
-
-Finally, we run the ps profile on the slave to finish the installation
-```bash
-kubectl exec -ti ps-slave-0 --  bash -c 'sudo HOSTIP="$(hostname).psslavehs.default.svc.cluster.local" /opt/apigee/apigee-setup/bin/setup.sh -p ps -f /config/opdk-ds-cluster.config'
-```
-
-### The org
-Let's validate the install and onboard the org
-```bash
-kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-validate install'
-kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-validate setup -f /org/org.config'
-kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service apigee-provision setup-org -f /org/org.config'
-```
-
-### Bounce the ui
-```bash
-kubectl exec -ti ms-0 --  bash -c '/opt/apigee/apigee-service/bin/apigee-service edge-ui restart'
-```
-
-### Enjoy
-Now you can use your environment for fun and profit
-
-## Kill it all and wipe it
-First we delete all the pods
-```bash
-kubectl delete -f opdk-manifests/
-```
-
-Next remove all the persisten volume claims
-```bash
-kubectl delete --all pvc
-```
-
-Finally remove all of the configmaps
-```bash
-kubectl delete --all configmap
-```
+## Logs
+Obviously you're going to need to look at logs while working on this. I typically log the controllers in the `metacontroller` namespace while working on new functionality.

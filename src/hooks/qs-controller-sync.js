@@ -1,0 +1,1 @@
+../../basicsetup/hooks/qs-controller-sync.js

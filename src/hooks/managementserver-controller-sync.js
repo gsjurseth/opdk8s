@@ -1,0 +1,1 @@
+../../basicsetup/hooks/managementserver-controller-sync.js

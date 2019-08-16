@@ -1,0 +1,132 @@
+{
+  "apiVersion": "ctl.enisoc.com/v1",
+  "kind": "CatSet",
+  "metadata": {
+    "name": "qs",
+    "namespace": "apigee"
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "matchLabels": {
+        "app": "qs"
+      }
+    },
+    "serviceName": "qshs",
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "qs"
+        },
+        "namespace": "apigee"
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
+            "name": "apigee-qs",
+            "command" : [
+              "sh",
+              "-c",
+              "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).qshs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p qs -f /config/cluster.config && while true ; do sleep 1 ; done" 
+            ],
+            "ports": [
+              {
+                "name": "jmx",
+                "containerPort": 1102
+              },
+              {
+                "name": "cache",
+                "containerPort": 4529
+              },
+              {
+                "name": "qpid-comms",
+                "containerPort": 5672
+              },
+              {
+                "name": "qpid-mgmt",
+                "containerPort": 8083
+              }
+            ],
+            "volumeMounts": [
+              {
+                "mountPath": "/opt/apigee/data",
+                "name": "datadir"
+              },
+              {
+                "mountPath": "/opt/apigee/var",
+                "name": "vardir"
+              },
+              {
+                "mountPath": "/config",
+                "name": "cluster-config",
+                "readOnly": true
+              }
+            ]
+          }
+        ],
+        "securityContext": {
+          "fsGroup": 998,
+          "runAsUser": 999
+        },
+        "terminationGracePeriodSeconds": 1,
+        "volumes": [
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "cluster-config"
+            },
+            "name": "cluster-config"
+          },
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "apigee-license"
+            },
+            "name": "license-volume"
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "labels": {
+            "app": "qs"
+          },
+          "name": "datadir",
+          "namespace": "apigee"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      },
+      {
+        "metadata": {
+          "labels": {
+            "app": "qs"
+          },
+          "name": "vardir",
+          "namespace": "apigee"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

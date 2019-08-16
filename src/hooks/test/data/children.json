@@ -1,0 +1,46 @@
+{
+  "ConfigMap.v1": {
+    "cluster-config": {
+      "apiVersion": "v1",
+      "data": {
+      },
+      "kind": "ConfigMap",
+      "metadata": {
+      }
+    }
+  },
+  "datastore.apigee.google.com/v1": {
+    "opdkds": {
+      "apiVersion": "apigee.google.com/v1",
+      "kind": "datastore",
+      "metadata": {
+      },
+      "spec": {
+        "replicants": 3
+      },
+      "status": {
+        "observedGeneration": 1,
+        "ready": true
+      }
+    }
+  },
+  "managementserver.apigee.google.com/v1": {
+    "opdkms": {
+      "apiVersion": "apigee.google.com/v1",
+      "kind": "managementserver",
+      "metadata": {
+      },
+      "spec": {
+        "replicants": 1
+      },
+      "status": {
+        "observedGeneration": 1,
+        "ready": false
+      }
+    }
+  },
+  "qs.apigee.google.com/v1": {},
+  "psmaster.apigee.google.com/v1": {},
+  "psslave.apigee.google.com/v1": {},
+  "router.apigee.google.com/v1": {}
+}

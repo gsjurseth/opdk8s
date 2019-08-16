@@ -1,0 +1,72 @@
+{
+  "request": {
+    "body": {
+      "controller": {
+        "metadata": {
+          "name": "apigeeplanet-controller",
+          "selfLink": "/apis/metacontroller.k8s.io/v1alpha1/compositecontrollers/apigeeplanet-controller",
+          "uid": "c5292a75-b9b2-11e9-8f21-42010aa60fcc",
+          "resourceVersion": "6467948",
+          "generation": 1,
+          "creationTimestamp": "2019-08-08T08:01:47Z",
+          "annotations": {
+          }
+        },
+        "spec": {
+          "parentResource": {
+            "apiVersion": "apigee.google.com/v1",
+            "resource": "apigeeplanets"
+          },
+          "childResources": [
+          ],
+          "hooks": {
+            "sync": {
+              "webhook": {
+                "url": "http://apigee-controller.metacontroller/apigeeplanet-controller-sync"
+              }
+            },
+            "finalize": {
+              "webhook": {
+                "url": "http://apigee-controller.metacontroller/apigeeplanet-controller-sync"
+              }
+            }
+          },
+          "generateSelector": true
+        },
+        "status": {}
+      },
+      "parent": {
+        "apiVersion": "apigee.google.com/v1",
+        "kind": "apigeeplanet",
+        "metadata": {
+          "annotations": {
+          },
+          "creationTimestamp": "2019-08-08T08:02:51Z",
+          "finalizers": [
+            "metacontroller.app/compositecontroller-apigeeplanet-controller"
+          ],
+          "generation": 1,
+          "name": "opdkplanet",
+          "namespace": "apigee",
+          "resourceVersion": "6468215",
+          "selfLink": "/apis/apigee.google.com/v1/namespaces/apigee/apigeeplanets/opdkplanet",
+          "uid": "eb68e0e4-b9b2-11e9-b4a2-42010aa60fcd"
+        },
+        "spec": {
+          "admin_email": "opdk@google.com",
+          "adminpw": "Simple1234"
+        }
+      },
+      "children": {
+        "ConfigMap.v1": { "cluster-config": {} },
+        "datastore.apigee.google.com/v1": { "opdkds" : {} },
+        "managementserver.apigee.google.com/v1": { "opdkms" : {} },
+        "qs.apigee.google.com/v1": { "opdkqs" : {} },
+        "psmaster.apigee.google.com/v1": { "opdkpsmaster" : {} },
+        "psslave.apigee.google.com/v1": { "opdkpsslave" : {} },
+        "router.apigee.google.com/v1": { "opdkrouter" : {} }
+      },
+      "finalizing": false
+    }
+  }
+}

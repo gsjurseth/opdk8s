@@ -1,0 +1,1 @@
+../../basicsetup/hooks/psslave-controller-sync.js

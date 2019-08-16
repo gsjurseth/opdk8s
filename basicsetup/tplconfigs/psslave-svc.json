@@ -1,0 +1,40 @@
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+      "labels": {
+        "app": "psslavehs"
+      },
+      "name": "psslavehs",
+      "namespace": "apigee"
+    },
+    "spec": {
+      "clusterIP": "None",
+      "ports": [
+        {
+          "name": "ssh",
+          "port": 22
+        },
+        {
+          "name": "jmx",
+          "port": 1103
+        },
+        {
+          "name": "cache",
+          "port": 4530
+        },
+        {
+          "name": "qpid-ps-comms",
+          "port": 5432
+        },
+        {
+          "name": "mgmt-port",
+          "port": 8084
+        }
+      ],
+      "selector": {
+        "app": "psslave"
+      }
+    }
+}
+

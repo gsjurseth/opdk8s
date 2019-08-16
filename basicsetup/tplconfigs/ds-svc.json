@@ -1,0 +1,48 @@
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+      "labels": {
+        "app": "ds"
+      },
+      "name": "dshs",
+      "namespace": "apigee"
+    },
+    "spec": {
+      "clusterIP": "None",
+      "ports": [
+        {
+          "name": "client",
+          "port": 2181
+        },
+        {
+          "name": "server",
+          "port": 2888
+        },
+        {
+          "name": "leader-election",
+          "port": 3888
+        },
+        {
+          "name": "jmx",
+          "port": 7199
+        },
+        {
+          "name": "internode-comms",
+          "port": 7000
+        },
+        {
+          "name": "cql",
+          "port": 9042
+        },
+        {
+          "name": "thrift",
+          "port": 9160
+        }
+      ],
+      "selector": {
+        "app": "ds"
+      }
+    }
+}
+

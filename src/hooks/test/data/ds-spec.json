@@ -1,0 +1,147 @@
+{
+  "apiVersion": "ctl.enisoc.com/v1",
+  "kind": "CatSet",
+  "metadata": {
+    "name": "ds"
+  },
+  "spec": {
+    "replicas": 3,
+    "podManagementPolicy": "Parallel",
+    "selector": {
+      "matchLabels": {
+        "app": "ds"
+      }
+    },
+    "serviceName": "dshs",
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "ds"
+        }
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
+            "name": "apigee-ds",
+            "command" : [
+              "sh",
+              "-c",
+              "sudo HOSTIP=\"$(hostname).dshs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ds -f /config/cluster.config && (for a in $(echo -e \"ds-0.dshs\nds-1.dshs\nds-2.dshs\" | fgrep -v $(hostname)) ; do echo \"trying $a\" ; curl -s -X POST http://$a:9999/zk ; done ; exit 0) && /localdaemon/zk-Keeper" 
+            ],
+            "ports": [
+              {
+                "containerPort": 2181,
+                "name": "client"
+              },
+              {
+                "containerPort": 2888,
+                "name": "server"
+              },
+              {
+                "containerPort": 3888,
+                "name": "leader-election"
+              },
+              {
+                "containerPort": 7199,
+                "name": "jmx"
+              },
+              {
+                "containerPort": 7000,
+                "name": "internode-comms"
+              },
+              {
+                "containerPort": 9042,
+                "name": "cql"
+              },
+              {
+                "containerPort": 9160,
+                "name": "thrift"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "mountPath": "/opt/apigee/data",
+                "name": "datadir"
+              },
+              {
+                "mountPath": "/opt/apigee/var",
+                "name": "vardir"
+              },
+              {
+                "mountPath": "/config",
+                "name": "cluster-config",
+                "readOnly": true
+              },
+              {
+                "mountPath": "/license/license.txt",
+                "name": "license-volume",
+                "readOnly": true,
+                "subPath": "license.txt"
+              }
+            ]
+          }
+        ],
+        "securityContext": {
+          "fsGroup": 998,
+          "runAsUser": 999
+        },
+        "terminationGracePeriodSeconds": 1,
+        "volumes": [
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "cluster-config"
+            },
+            "name": "cluster-config"
+          },
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "apigee-license"
+            },
+            "name": "license-volume"
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "labels": {
+            "app": "ds"
+          },
+          "name": "datadir"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      },
+      {
+        "metadata": {
+          "labels": {
+            "app": "ds"
+          },
+          "name": "vardir"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "apiVersion": "ctl.enisoc.com/v1",
+  "kind": "CatSet",
+  "metadata": {
+    "name": "psmaster",
+    "namespace": "apigee"
+  },
+  "spec": {
+    "replicas": 1,
+    "selector": {
+      "matchLabels": {
+        "app": "psmaster"
+      }
+    },
+    "serviceName": "psmasterhs",
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "psmaster"
+        },
+        "namespace": "apigee"
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
+            "name": "apigee-psmaster",
+            "command" : [
+              "sh",
+              "-c",
+              "sudo mkdir -p /opt/apigee/var/log && sudo chown apigee:apigee /opt/apigee && sudo chown -R apigee:apigee /opt/apigee/var && sudo chmod -R 775 /opt/apigee/var && sudo chown -R apigee:apigee /opt/apigee/data && sudo chmod -R 700 /opt/apigee/data && sudo HOSTIP=\"$(hostname).psmasterhs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p ps -f /config/cluster.config && while true ; do sleep 1 ; done" 
+            ],
+            "readinessProbe": {
+              "tcpSocket": {
+                "port": 8084
+              },
+              "initialDelaySeconds": 120,
+              "periodSeconds": 30,
+              "timeoutSeconds": 2
+            },
+            "ports": [
+              {
+                "name": "ssh",
+                "containerPort": 22
+              },
+              {
+                "name": "jmx",
+                "containerPort": 1103
+              },
+              {
+                "name": "cache",
+                "containerPort": 4530
+              },
+              {
+                "name": "qpid-ps-comms",
+                "containerPort": 5432
+              },
+              {
+                "name": "mgmt-port",
+                "containerPort": 8084
+              }
+            ],
+            "volumeMounts": [
+              {
+                "mountPath": "/opt/apigee/data",
+                "name": "datadir"
+              },
+              {
+                "mountPath": "/opt/apigee/var",
+                "name": "vardir"
+              },
+              {
+                "mountPath": "/config",
+                "name": "cluster-config",
+                "readOnly": true
+              },
+              {
+                "mountPath": "/license/license.txt",
+                "name": "license-volume",
+                "readOnly": true,
+                "subPath": "license.txt"
+              }
+            ]
+          }
+        ],
+        "securityContext": {
+          "fsGroup": 998,
+          "runAsUser": 999
+        },
+        "terminationGracePeriodSeconds": 1,
+        "volumes": [
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "cluster-config"
+            },
+            "name": "cluster-config"
+          },
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "apigee-license"
+            },
+            "name": "license-volume"
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "labels": {
+            "app": "psmaster"
+          },
+          "name": "datadir",
+          "namespace": "apigee"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      },
+      {
+        "metadata": {
+          "labels": {
+            "app": "psmaster"
+          },
+          "name": "vardir",
+          "namespace": "apigee"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

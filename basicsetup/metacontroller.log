@@ -1,0 +1,780 @@
+I0806 20:04:09.835474       1 main.go:50] Discovery cache flush interval: 20s
+I0806 20:04:09.835644       1 main.go:51] API server object cache flush interval: 30m0s
+I0806 20:04:09.835653       1 main.go:52] Debug http server address: :9999
+I0806 20:04:09.835667       1 main.go:60] No kubeconfig file specified; trying in-cluster auto-config...
+I0806 20:04:09.837174       1 reflector.go:202] Starting reflector *v1alpha1.CompositeController (30m0s) from metacontroller.app/client/generated/informer/externalversions/factory.go:117
+I0806 20:04:09.837232       1 reflector.go:240] Listing and watching *v1alpha1.CompositeController from metacontroller.app/client/generated/informer/externalversions/factory.go:117
+I0806 20:04:09.837456       1 metacontroller.go:92] Starting CompositeController metacontroller
+I0806 20:04:09.837666       1 controller.go:32] Waiting for caches to sync for CompositeController controller
+I0806 20:04:09.837740       1 metacontroller.go:85] Starting DecoratorController metacontroller
+I0806 20:04:09.837756       1 controller.go:32] Waiting for caches to sync for DecoratorController controller
+I0806 20:04:09.840587       1 reflector.go:202] Starting reflector *v1alpha1.ControllerRevision (30m0s) from metacontroller.app/client/generated/informer/externalversions/factory.go:117
+I0806 20:04:09.840623       1 reflector.go:240] Listing and watching *v1alpha1.ControllerRevision from metacontroller.app/client/generated/informer/externalversions/factory.go:117
+I0806 20:04:09.841339       1 reflector.go:202] Starting reflector *v1alpha1.DecoratorController (30m0s) from metacontroller.app/client/generated/informer/externalversions/factory.go:117
+I0806 20:04:09.841385       1 reflector.go:240] Listing and watching *v1alpha1.DecoratorController from metacontroller.app/client/generated/informer/externalversions/factory.go:117
+I0806 20:04:09.937941       1 shared_informer.go:123] caches populated
+I0806 20:04:09.938020       1 controller.go:39] Caches are synced for CompositeController controller
+I0806 20:04:09.940546       1 shared_informer.go:123] caches populated
+I0806 20:04:09.940580       1 controller.go:39] Caches are synced for DecoratorController controller
+I0806 20:04:10.482156       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:10.482208       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:10.487482       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:10.487547       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:10.497843       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:10.497965       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:10.518277       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:10.518348       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:10.558649       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:10.558758       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:10.639069       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:10.639131       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:10.799417       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:10.799550       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:11.119939       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:11.119999       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:11.760420       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:11.760483       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:13.040765       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:13.040895       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:15.601305       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:15.601400       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:20.721742       1 metacontroller.go:148] sync CompositeController catset-controller
+E0806 20:04:20.721906       1 metacontroller.go:133] failed to sync CompositeController "catset-controller": discovery: can't find resource catsets in apiVersion ctl.enisoc.com/v1
+I0806 20:04:30.962367       1 metacontroller.go:148] sync CompositeController catset-controller
+I0806 20:04:30.962464       1 factory.go:104] Starting shared informer for catsets in ctl.enisoc.com/v1
+I0806 20:04:30.962512       1 factory.go:104] Starting shared informer for pods in v1
+I0806 20:04:30.962532       1 factory.go:104] Starting shared informer for persistentvolumeclaims in v1
+I0806 20:04:30.962750       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:04:30.962780       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:04:30.962802       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:04:30.962852       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:04:30.962942       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:04:30.962976       1 controller.go:165] Starting CatSet CompositeController
+I0806 20:04:30.962987       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:04:30.962990       1 controller.go:169] Waiting for CatSet CompositeController caches to sync
+I0806 20:04:30.963007       1 controller.go:32] Waiting for caches to sync for CatSet controller
+I0806 20:04:31.063278       1 shared_informer.go:123] caches populated
+I0806 20:04:31.063330       1 controller.go:39] Caches are synced for CatSet controller
+I0806 20:09:13.782564       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:13.782619       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:13.787919       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:13.787990       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:13.798231       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:13.798269       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:13.818550       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:13.818612       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:13.858925       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:13.858992       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:13.939236       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:13.939294       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:13.998267       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:13.998312       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:14.003572       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:14.003734       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:14.014014       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:14.014122       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:14.034716       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:14.034788       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:14.075139       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:14.075203       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:14.099645       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:14.099711       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:14.155574       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:14.155642       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:14.316082       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:14.316165       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:14.419994       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:14.420290       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:14.636427       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:14.636493       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:15.060658       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:15.060764       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:15.276897       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:15.276977       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:16.341098       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:16.341165       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:16.557337       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:16.557438       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:18.901513       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:18.901589       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:19.117755       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:19.117874       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:24.022074       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+E0806 20:09:24.022165       1 metacontroller.go:133] failed to sync CompositeController "apigeeplanet-controller": discovery: can't find resource apigeeplanets in apiVersion apigee.google.com/v1
+I0806 20:09:24.238205       1 metacontroller.go:148] sync CompositeController datastore-controller
+E0806 20:09:24.238262       1 metacontroller.go:133] failed to sync CompositeController "datastore-controller": discovery: can't find resource datastores in apiVersion apigee.google.com/v1
+I0806 20:09:34.262507       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:09:34.262579       1 factory.go:104] Starting shared informer for apigeeplanets in apigee.google.com/v1
+I0806 20:09:34.262641       1 factory.go:104] Starting shared informer for configmaps in v1
+I0806 20:09:34.262675       1 factory.go:104] Starting shared informer for datastores in apigee.google.com/v1
+I0806 20:09:34.262801       1 controller.go:165] Starting apigeeplanet CompositeController
+I0806 20:09:34.262869       1 controller.go:169] Waiting for apigeeplanet CompositeController caches to sync
+I0806 20:09:34.262911       1 controller.go:32] Waiting for caches to sync for apigeeplanet controller
+I0806 20:09:34.262977       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.262994       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.263063       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.263082       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.263520       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.263538       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.363185       1 shared_informer.go:123] caches populated
+I0806 20:09:34.363247       1 controller.go:39] Caches are synced for apigeeplanet controller
+I0806 20:09:34.478663       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:09:34.478727       1 factory.go:69] Subscribed to shared informer for datastores in apigee.google.com/v1 (total subscribers now 2)
+I0806 20:09:34.478743       1 factory.go:104] Starting shared informer for statefulsets in apps/v1beta1
+I0806 20:09:34.479080       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.479109       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:34.479450       1 controller.go:165] Starting datastore CompositeController
+I0806 20:09:34.479479       1 controller.go:169] Waiting for datastore CompositeController caches to sync
+I0806 20:09:34.479488       1 controller.go:32] Waiting for caches to sync for datastore controller
+I0806 20:09:34.579705       1 shared_informer.go:123] caches populated
+I0806 20:09:34.579767       1 controller.go:39] Caches are synced for datastore controller
+I0806 20:09:49.746620       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:09:49.746678       1 metacontroller.go:152] CompositeController apigeeplanet-controller has been deleted
+I0806 20:09:49.746758       1 controller.go:191] Shutting down apigeeplanet CompositeController
+I0806 20:09:49.746794       1 factory.go:89] Unsubscribed from shared informer for configmaps in v1 (total subscribers now 0)
+I0806 20:09:49.746864       1 factory.go:98] Stopping shared informer for configmaps in v1 (no more subscribers)
+I0806 20:09:49.746892       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 1)
+I0806 20:09:49.746906       1 factory.go:89] Unsubscribed from shared informer for apigeeplanets in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:09:49.746914       1 factory.go:98] Stopping shared informer for apigeeplanets in apigee.google.com/v1 (no more subscribers)
+I0806 20:09:49.881635       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:09:49.881673       1 metacontroller.go:152] CompositeController datastore-controller has been deleted
+I0806 20:09:49.881728       1 controller.go:191] Shutting down datastore CompositeController
+I0806 20:09:49.881753       1 factory.go:89] Unsubscribed from shared informer for statefulsets in apps/v1beta1 (total subscribers now 0)
+I0806 20:09:49.881771       1 factory.go:98] Stopping shared informer for statefulsets in apps/v1beta1 (no more subscribers)
+I0806 20:09:49.881786       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:09:49.881796       1 factory.go:98] Stopping shared informer for datastores in apigee.google.com/v1 (no more subscribers)
+I0806 20:09:56.005150       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:09:56.005214       1 factory.go:104] Starting shared informer for apigeeplanets in apigee.google.com/v1
+I0806 20:09:56.005262       1 factory.go:104] Starting shared informer for configmaps in v1
+I0806 20:09:56.005291       1 factory.go:104] Starting shared informer for datastores in apigee.google.com/v1
+I0806 20:09:56.005495       1 controller.go:165] Starting apigeeplanet CompositeController
+I0806 20:09:56.005539       1 controller.go:169] Waiting for apigeeplanet CompositeController caches to sync
+I0806 20:09:56.005548       1 controller.go:32] Waiting for caches to sync for apigeeplanet controller
+I0806 20:09:56.005560       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.005587       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.005636       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.005652       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.005507       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.005679       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.105789       1 shared_informer.go:123] caches populated
+I0806 20:09:56.105878       1 controller.go:39] Caches are synced for apigeeplanet controller
+I0806 20:09:56.201682       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:09:56.201751       1 factory.go:69] Subscribed to shared informer for datastores in apigee.google.com/v1 (total subscribers now 2)
+I0806 20:09:56.201768       1 factory.go:104] Starting shared informer for statefulsets in apps/v1beta1
+I0806 20:09:56.201901       1 controller.go:165] Starting datastore CompositeController
+I0806 20:09:56.201953       1 controller.go:169] Waiting for datastore CompositeController caches to sync
+I0806 20:09:56.202030       1 controller.go:32] Waiting for caches to sync for datastore controller
+I0806 20:09:56.202076       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.202106       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:09:56.302349       1 shared_informer.go:123] caches populated
+I0806 20:09:56.302421       1 controller.go:39] Caches are synced for datastore controller
+I0806 20:10:25.203124       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:10:25.203175       1 metacontroller.go:152] CompositeController apigeeplanet-controller has been deleted
+I0806 20:10:25.203295       1 controller.go:191] Shutting down apigeeplanet CompositeController
+I0806 20:10:25.203353       1 factory.go:89] Unsubscribed from shared informer for configmaps in v1 (total subscribers now 0)
+I0806 20:10:25.203369       1 factory.go:98] Stopping shared informer for configmaps in v1 (no more subscribers)
+I0806 20:10:25.203389       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 1)
+I0806 20:10:25.203397       1 factory.go:89] Unsubscribed from shared informer for apigeeplanets in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:10:25.203401       1 factory.go:98] Stopping shared informer for apigeeplanets in apigee.google.com/v1 (no more subscribers)
+I0806 20:10:25.312385       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:10:25.312439       1 metacontroller.go:152] CompositeController datastore-controller has been deleted
+I0806 20:10:25.312638       1 controller.go:191] Shutting down datastore CompositeController
+I0806 20:10:25.312668       1 factory.go:89] Unsubscribed from shared informer for statefulsets in apps/v1beta1 (total subscribers now 0)
+I0806 20:10:25.312758       1 factory.go:98] Stopping shared informer for statefulsets in apps/v1beta1 (no more subscribers)
+I0806 20:10:25.312791       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:10:25.312799       1 factory.go:98] Stopping shared informer for datastores in apigee.google.com/v1 (no more subscribers)
+I0806 20:10:31.533408       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:10:31.533478       1 factory.go:104] Starting shared informer for apigeeplanets in apigee.google.com/v1
+I0806 20:10:31.533583       1 factory.go:104] Starting shared informer for configmaps in v1
+I0806 20:10:31.533684       1 factory.go:104] Starting shared informer for datastores in apigee.google.com/v1
+I0806 20:10:31.533802       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.533858       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.533895       1 controller.go:165] Starting apigeeplanet CompositeController
+I0806 20:10:31.533923       1 controller.go:169] Waiting for apigeeplanet CompositeController caches to sync
+I0806 20:10:31.533934       1 controller.go:32] Waiting for caches to sync for apigeeplanet controller
+I0806 20:10:31.534009       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.534026       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.534076       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.534090       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.634219       1 shared_informer.go:123] caches populated
+I0806 20:10:31.634281       1 controller.go:39] Caches are synced for apigeeplanet controller
+I0806 20:10:31.736479       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:10:31.736527       1 factory.go:69] Subscribed to shared informer for datastores in apigee.google.com/v1 (total subscribers now 2)
+I0806 20:10:31.736565       1 factory.go:104] Starting shared informer for statefulsets in apps/v1beta1
+I0806 20:10:31.736734       1 controller.go:165] Starting datastore CompositeController
+I0806 20:10:31.736784       1 controller.go:169] Waiting for datastore CompositeController caches to sync
+I0806 20:10:31.736798       1 controller.go:32] Waiting for caches to sync for datastore controller
+I0806 20:10:31.736855       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.736885       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:10:31.837089       1 shared_informer.go:123] caches populated
+I0806 20:10:31.837140       1 controller.go:39] Caches are synced for datastore controller
+I0806 20:11:08.972186       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:11:08.972251       1 metacontroller.go:152] CompositeController apigeeplanet-controller has been deleted
+I0806 20:11:08.972324       1 controller.go:191] Shutting down apigeeplanet CompositeController
+I0806 20:11:08.972359       1 factory.go:89] Unsubscribed from shared informer for configmaps in v1 (total subscribers now 0)
+I0806 20:11:08.972380       1 factory.go:98] Stopping shared informer for configmaps in v1 (no more subscribers)
+I0806 20:11:08.972390       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 1)
+I0806 20:11:08.972403       1 factory.go:89] Unsubscribed from shared informer for apigeeplanets in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:11:08.972407       1 factory.go:98] Stopping shared informer for apigeeplanets in apigee.google.com/v1 (no more subscribers)
+I0806 20:11:09.093114       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:11:09.093163       1 metacontroller.go:152] CompositeController datastore-controller has been deleted
+I0806 20:11:09.093230       1 controller.go:191] Shutting down datastore CompositeController
+I0806 20:11:09.093280       1 factory.go:89] Unsubscribed from shared informer for statefulsets in apps/v1beta1 (total subscribers now 0)
+I0806 20:11:09.093299       1 factory.go:98] Stopping shared informer for statefulsets in apps/v1beta1 (no more subscribers)
+I0806 20:11:09.093327       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:11:09.093472       1 factory.go:98] Stopping shared informer for datastores in apigee.google.com/v1 (no more subscribers)
+I0806 20:11:20.628122       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:11:20.628199       1 factory.go:104] Starting shared informer for apigeeplanets in apigee.google.com/v1
+I0806 20:11:20.628281       1 factory.go:104] Starting shared informer for configmaps in v1
+I0806 20:11:20.628303       1 factory.go:104] Starting shared informer for datastores in apigee.google.com/v1
+I0806 20:11:20.628394       1 controller.go:165] Starting apigeeplanet CompositeController
+I0806 20:11:20.628405       1 controller.go:169] Waiting for apigeeplanet CompositeController caches to sync
+I0806 20:11:20.628412       1 controller.go:32] Waiting for caches to sync for apigeeplanet controller
+I0806 20:11:20.628537       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.628569       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.628581       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.628603       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.628911       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.628934       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.728690       1 shared_informer.go:123] caches populated
+I0806 20:11:20.728739       1 controller.go:39] Caches are synced for apigeeplanet controller
+I0806 20:11:20.880855       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:11:20.880914       1 factory.go:69] Subscribed to shared informer for datastores in apigee.google.com/v1 (total subscribers now 2)
+I0806 20:11:20.880934       1 factory.go:104] Starting shared informer for statefulsets in apps/v1beta1
+I0806 20:11:20.881102       1 controller.go:165] Starting datastore CompositeController
+I0806 20:11:20.881146       1 controller.go:169] Waiting for datastore CompositeController caches to sync
+I0806 20:11:20.881158       1 controller.go:32] Waiting for caches to sync for datastore controller
+I0806 20:11:20.881198       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.881218       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:11:20.981427       1 shared_informer.go:123] caches populated
+I0806 20:11:20.981476       1 controller.go:39] Caches are synced for datastore controller
+I0806 20:11:37.968283       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 0 items received
+I0806 20:11:41.968483       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 0 items received
+I0806 20:12:10.882452       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.CompositeController total 15 items received
+I0806 20:12:28.886697       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.DecoratorController total 0 items received
+I0806 20:12:56.983214       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 24 items received
+I0806 20:13:51.884925       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.ControllerRevision total 0 items received
+I0806 20:15:47.551789       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:15:47.551880       1 metacontroller.go:152] CompositeController apigeeplanet-controller has been deleted
+I0806 20:15:47.552137       1 controller.go:191] Shutting down apigeeplanet CompositeController
+I0806 20:15:47.552175       1 factory.go:89] Unsubscribed from shared informer for configmaps in v1 (total subscribers now 0)
+I0806 20:15:47.552186       1 factory.go:98] Stopping shared informer for configmaps in v1 (no more subscribers)
+I0806 20:15:47.552197       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 1)
+I0806 20:15:47.552205       1 factory.go:89] Unsubscribed from shared informer for apigeeplanets in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:15:47.552215       1 factory.go:98] Stopping shared informer for apigeeplanets in apigee.google.com/v1 (no more subscribers)
+I0806 20:15:47.665216       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:15:47.665329       1 metacontroller.go:152] CompositeController datastore-controller has been deleted
+I0806 20:15:47.665625       1 controller.go:191] Shutting down datastore CompositeController
+I0806 20:15:47.665715       1 factory.go:89] Unsubscribed from shared informer for statefulsets in apps/v1beta1 (total subscribers now 0)
+I0806 20:15:47.665730       1 factory.go:98] Stopping shared informer for statefulsets in apps/v1beta1 (no more subscribers)
+I0806 20:15:47.665743       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:15:47.665751       1 factory.go:98] Stopping shared informer for datastores in apigee.google.com/v1 (no more subscribers)
+I0806 20:15:59.160207       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:15:59.160262       1 factory.go:104] Starting shared informer for apigeeplanets in apigee.google.com/v1
+I0806 20:15:59.160317       1 factory.go:104] Starting shared informer for configmaps in v1
+I0806 20:15:59.160370       1 factory.go:104] Starting shared informer for datastores in apigee.google.com/v1
+I0806 20:15:59.160596       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.160585       1 controller.go:165] Starting apigeeplanet CompositeController
+I0806 20:15:59.160624       1 controller.go:169] Waiting for apigeeplanet CompositeController caches to sync
+I0806 20:15:59.160634       1 controller.go:32] Waiting for caches to sync for apigeeplanet controller
+I0806 20:15:59.160615       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.160796       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.160858       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.161031       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.161045       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.260911       1 shared_informer.go:123] caches populated
+I0806 20:15:59.260981       1 controller.go:39] Caches are synced for apigeeplanet controller
+I0806 20:15:59.403446       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:15:59.403500       1 factory.go:69] Subscribed to shared informer for datastores in apigee.google.com/v1 (total subscribers now 2)
+I0806 20:15:59.403520       1 factory.go:104] Starting shared informer for statefulsets in apps/v1beta1
+I0806 20:15:59.403748       1 controller.go:165] Starting datastore CompositeController
+I0806 20:15:59.403888       1 controller.go:169] Waiting for datastore CompositeController caches to sync
+I0806 20:15:59.403918       1 controller.go:32] Waiting for caches to sync for datastore controller
+I0806 20:15:59.403758       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.403962       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:15:59.504260       1 shared_informer.go:123] caches populated
+I0806 20:15:59.504311       1 controller.go:39] Caches are synced for datastore controller
+I0806 20:17:13.739937       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:17:13.740031       1 metacontroller.go:152] CompositeController apigeeplanet-controller has been deleted
+I0806 20:17:13.740131       1 controller.go:191] Shutting down apigeeplanet CompositeController
+I0806 20:17:13.740176       1 factory.go:89] Unsubscribed from shared informer for configmaps in v1 (total subscribers now 0)
+I0806 20:17:13.740183       1 factory.go:98] Stopping shared informer for configmaps in v1 (no more subscribers)
+I0806 20:17:13.740195       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 1)
+I0806 20:17:13.740228       1 factory.go:89] Unsubscribed from shared informer for apigeeplanets in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:17:13.740239       1 factory.go:98] Stopping shared informer for apigeeplanets in apigee.google.com/v1 (no more subscribers)
+I0806 20:17:13.859055       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:17:13.859098       1 metacontroller.go:152] CompositeController datastore-controller has been deleted
+I0806 20:17:13.859153       1 controller.go:191] Shutting down datastore CompositeController
+I0806 20:17:13.859179       1 factory.go:89] Unsubscribed from shared informer for statefulsets in apps/v1beta1 (total subscribers now 0)
+I0806 20:17:13.859242       1 factory.go:98] Stopping shared informer for statefulsets in apps/v1beta1 (no more subscribers)
+I0806 20:17:13.859304       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:17:13.859339       1 factory.go:98] Stopping shared informer for datastores in apigee.google.com/v1 (no more subscribers)
+I0806 20:17:25.689542       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:17:25.689596       1 factory.go:104] Starting shared informer for apigeeplanets in apigee.google.com/v1
+I0806 20:17:25.689676       1 factory.go:104] Starting shared informer for configmaps in v1
+I0806 20:17:25.689711       1 factory.go:104] Starting shared informer for datastores in apigee.google.com/v1
+I0806 20:17:25.689978       1 controller.go:165] Starting apigeeplanet CompositeController
+I0806 20:17:25.690011       1 controller.go:169] Waiting for apigeeplanet CompositeController caches to sync
+I0806 20:17:25.690021       1 controller.go:32] Waiting for caches to sync for apigeeplanet controller
+I0806 20:17:25.690097       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:25.690133       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:25.690166       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:25.690217       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:25.690469       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:25.690483       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:25.790371       1 shared_informer.go:123] caches populated
+I0806 20:17:25.790430       1 controller.go:39] Caches are synced for apigeeplanet controller
+I0806 20:17:25.918286       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:17:25.918330       1 factory.go:69] Subscribed to shared informer for datastores in apigee.google.com/v1 (total subscribers now 2)
+I0806 20:17:25.918349       1 factory.go:104] Starting shared informer for statefulsets in apps/v1beta1
+I0806 20:17:25.918582       1 controller.go:165] Starting datastore CompositeController
+I0806 20:17:25.918626       1 controller.go:169] Waiting for datastore CompositeController caches to sync
+I0806 20:17:25.918642       1 controller.go:32] Waiting for caches to sync for datastore controller
+I0806 20:17:25.918676       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:25.918697       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:17:26.018905       1 shared_informer.go:123] caches populated
+I0806 20:17:26.019027       1 controller.go:39] Caches are synced for datastore controller
+I0806 20:18:26.082747       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:18:26.122695       1 manage_children.go:254] apigeeplanet apigee/opdkplanet: creating ConfigMap apigee/cluster-config
+I0806 20:18:26.129357       1 controller.go:307] apigeeplanet apigee/opdkplanet: child ConfigMap cluster-config created or updated
+I0806 20:18:26.137903       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:18:26.140386       1 manage_children.go:254] apigeeplanet apigee/opdkplanet: creating datastore apigee/opdkds
+I0806 20:18:26.146380       1 controller.go:307] apigeeplanet apigee/opdkplanet: child datastore opdkds created or updated
+I0806 20:18:26.146514       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:26.148459       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:26.149961       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:18:26.156660       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:26.157712       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:26.283230       1 request.go:485] Throttling request took 125.328394ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:26.483240       1 request.go:485] Throttling request took 320.123116ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:26.507036       1 controller_revision.go:285] CatSet apigee/ds: creating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+I0806 20:18:26.520343       1 manage_children.go:254] CatSet apigee/ds: creating Pod ds-0
+I0806 20:18:26.683139       1 request.go:485] Throttling request took 385.732131ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:18:26.883232       1 request.go:485] Throttling request took 362.614848ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/pods
+I0806 20:18:26.899588       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:26.902999       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim vardir-ds-1
+I0806 20:18:26.914706       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:27.083227       1 request.go:485] Throttling request took 396.141092ms, request: PUT:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:18:27.091183       1 controller.go:307] apigeeplanet apigee/opdkplanet: child datastore opdkds created or updated
+I0806 20:18:27.091279       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:18:27.092167       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:27.094361       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:27.283225       1 request.go:485] Throttling request took 380.071874ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:18:27.288944       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:18:27.290401       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim vardir-ds-2
+I0806 20:18:27.303565       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:27.313218       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:18:27.483205       1 request.go:485] Throttling request took 389.572063ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/apigeeplanets/opdkplanet
+I0806 20:18:27.683160       1 request.go:485] Throttling request took 584.017507ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:27.693435       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:27.883270       1 request.go:485] Throttling request took 592.683722ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:18:27.888387       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:18:27.889253       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim datadir-ds-0
+I0806 20:18:27.899210       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:18:28.083146       1 request.go:485] Throttling request took 389.474064ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:28.283248       1 request.go:485] Throttling request took 393.787919ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:18:28.289362       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:18:28.289579       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim datadir-ds-1
+I0806 20:18:28.298262       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:28.301254       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:18:28.483164       1 request.go:485] Throttling request took 385.651487ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:28.489550       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:28.494877       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:28.497041       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:28.683136       1 request.go:485] Throttling request took 393.368827ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:18:28.688145       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:18:28.688287       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim datadir-ds-2
+I0806 20:18:28.696420       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:18:28.883159       1 request.go:485] Throttling request took 385.799927ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:28.891859       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:29.083201       1 request.go:485] Throttling request took 394.743932ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:18:29.089042       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim vardir-ds-0
+I0806 20:18:29.089288       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:18:29.104209       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:18:29.105428       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:29.283159       1 request.go:485] Throttling request took 391.081879ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:29.483175       1 request.go:485] Throttling request took 393.934596ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:18:29.491067       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:18:29.500110       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:18:29.526986       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:29.683168       1 request.go:485] Throttling request took 383.271177ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:29.686932       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:29.697241       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:29.699118       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:29.883202       1 request.go:485] Throttling request took 392.001669ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:30.083195       1 request.go:485] Throttling request took 383.791924ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:30.091612       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:30.283154       1 request.go:485] Throttling request took 395.749175ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:30.292002       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:30.483215       1 request.go:485] Throttling request took 391.340377ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:30.683190       1 request.go:485] Throttling request took 375.429928ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:30.883179       1 request.go:485] Throttling request took 389.471671ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:30.887470       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:30.907882       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:30.910200       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:31.083171       1 request.go:485] Throttling request took 395.291863ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:31.092636       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:31.283198       1 request.go:485] Throttling request took 372.442815ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:31.292164       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:31.483174       1 request.go:485] Throttling request took 386.064918ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:31.683186       1 request.go:485] Throttling request took 390.770174ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:31.755560       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:31.765271       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:18:31.773221       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:18:31.883159       1 request.go:485] Throttling request took 395.077453ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:31.890089       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:31.926015       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:18:31.935458       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:18:32.083111       1 request.go:485] Throttling request took 387.500964ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:32.087053       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:32.127431       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:32.129399       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:32.283147       1 request.go:485] Throttling request took 387.969664ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:32.483213       1 request.go:485] Throttling request took 353.526492ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:32.492258       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:32.683208       1 request.go:485] Throttling request took 395.305445ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:32.692352       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:32.883144       1 request.go:485] Throttling request took 390.615968ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:32.924576       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:32.927055       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:18:32.935723       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:18:32.964658       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:18:32.972434       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:18:32.985166       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:18:32.990191       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:18:33.021656       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:33.083217       1 request.go:485] Throttling request took 384.282008ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:33.283188       1 request.go:485] Throttling request took 383.483192ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:33.287194       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:33.367465       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:33.369654       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:33.483202       1 request.go:485] Throttling request took 395.126537ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:33.489489       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:33.683218       1 request.go:485] Throttling request took 313.131046ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:33.691654       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:33.883233       1 request.go:485] Throttling request took 389.108318ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:34.083262       1 request.go:485] Throttling request took 391.34511ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:34.283230       1 request.go:485] Throttling request took 394.876796ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:34.337587       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:34.337695       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:34.348319       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:18:34.357142       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:18:34.364025       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:34.381128       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:34.483115       1 request.go:485] Throttling request took 386.961565ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:34.486654       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:34.646966       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:34.648758       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:34.683157       1 request.go:485] Throttling request took 341.240906ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:34.883185       1 request.go:485] Throttling request took 234.142244ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:34.892270       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:35.083190       1 request.go:485] Throttling request took 395.284706ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:35.090178       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:35.283207       1 request.go:485] Throttling request took 390.704444ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:35.483244       1 request.go:485] Throttling request took 385.192744ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:18:35.683106       1 request.go:485] Throttling request took 387.532864ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:35.686028       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:35.883168       1 request.go:485] Throttling request took 395.331688ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:18:36.006351       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:36.008315       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:36.083231       1 request.go:485] Throttling request took 74.627958ms, request: POST:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets
+I0806 20:18:36.092217       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:18:36.283178       1 request.go:485] Throttling request took 190.705629ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:18:36.483185       1 request.go:485] Throttling request took 182.91472ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+E0806 20:18:36.487342       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:37.127721       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:37.129764       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:37.138775       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:18:37.153964       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:37.884720       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.CompositeController total 8 items received
+I0806 20:18:38.434363       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:38.437022       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:38.451120       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:18:38.468761       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:41.029240       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:41.031280       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:41.040439       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:18:41.058698       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:46.179014       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:46.185037       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:46.194584       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:18:46.211005       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:54.037581       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:18:54.037752       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:54.048618       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+I0806 20:18:54.055949       1 manage_children.go:254] CatSet apigee/ds: creating Pod ds-1
+I0806 20:18:54.067657       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:18:54.086642       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:18:54.090608       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:54.103286       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:18:54.112281       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:18:56.451403       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:18:56.456993       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:18:56.466533       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:18:56.482961       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:18:57.894468       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.DecoratorController total 0 items received
+I0806 20:19:13.477411       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:19:13.477521       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:19:13.486033       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+I0806 20:19:13.495074       1 manage_children.go:254] CatSet apigee/ds: creating Pod ds-2
+I0806 20:19:13.518051       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:19:13.526653       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:19:13.532704       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:19:13.543658       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:19:13.562328       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:19:16.963342       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:19:16.969986       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:19:16.983983       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:19:17.004301       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:19:28.976350       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 8 items received
+I0806 20:19:32.240886       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:19:32.240957       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:19:32.277121       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:19:52.887408       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.ControllerRevision total 3 items received
+I0806 20:19:57.964657       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:19:57.971102       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:19:57.979999       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:19:57.994144       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:20:59.971099       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 24 items received
+I0806 20:21:19.914598       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:21:19.920851       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:21:19.938294       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+E0806 20:21:19.954545       1 controller.go:223] failed to sync datastore "apigee/opdkds": can't reconcile children for datastore apigee/opdkds: [catsets.ctl.enisoc.com "ds" already exists, services "dshs" already exists]
+I0806 20:21:41.986040       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 43 items received
+I0806 20:21:55.148535       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+E0806 20:21:55.174851       1 controller.go:223] failed to sync apigeeplanet "apigee/opdkplanet": can't update status for apigeeplanet apigee/opdkplanet: apigeeplanets.apigee.google.com "opdkplanet" not found
+I0806 20:21:55.174933       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:21:55.174950       1 controller.go:411] apigeeplanet apigee/opdkplanet has been deleted
+I0806 20:21:55.180149       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:21:55.180184       1 controller.go:411] apigeeplanet apigee/opdkplanet has been deleted
+I0806 20:21:55.197087       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:21:55.197123       1 controller.go:411] datastore apigee/opdkds has been deleted
+I0806 20:21:55.215193       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:21:55.223544       1 manage_children.go:171] CatSet apigee/ds: deleting Pod apigee/ds-2
+I0806 20:21:55.246285       1 controller.go:368] CatSet apigee/ds: child Pod ds-2 deleted
+I0806 20:21:55.275930       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:21:55.299565       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:21:58.190448       1 controller.go:368] CatSet apigee/ds: child Pod ds-2 deleted
+I0806 20:21:58.190533       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:03.928691       1 controller.go:368] CatSet apigee/ds: child Pod ds-2 deleted
+I0806 20:22:03.928840       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:03.934320       1 controller.go:368] CatSet apigee/ds: child Pod ds-2 deleted
+I0806 20:22:03.951260       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:03.958510       1 manage_children.go:171] CatSet apigee/ds: deleting Pod apigee/ds-1
+I0806 20:22:03.966900       1 controller.go:368] CatSet apigee/ds: child Pod ds-1 deleted
+I0806 20:22:03.983916       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:06.426620       1 controller.go:368] CatSet apigee/ds: child Pod ds-1 deleted
+I0806 20:22:06.426758       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:15.468800       1 controller.go:368] CatSet apigee/ds: child Pod ds-1 deleted
+I0806 20:22:15.469624       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:15.478396       1 controller.go:368] CatSet apigee/ds: child Pod ds-1 deleted
+I0806 20:22:15.501120       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:15.504989       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+I0806 20:22:15.515653       1 manage_children.go:171] CatSet apigee/ds: deleting Pod apigee/ds-0
+I0806 20:22:15.526520       1 controller.go:368] CatSet apigee/ds: child Pod ds-0 deleted
+I0806 20:22:15.539787       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:15.542736       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+I0806 20:22:18.351530       1 controller.go:368] CatSet apigee/ds: child Pod ds-0 deleted
+I0806 20:22:18.351588       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:18.354871       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+I0806 20:22:19.365359       1 controller.go:368] CatSet apigee/ds: child Pod ds-0 deleted
+I0806 20:22:19.365420       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:19.370072       1 controller.go:368] CatSet apigee/ds: child Pod ds-0 deleted
+I0806 20:22:19.371062       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+I0806 20:22:19.395759       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:19.401523       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-32b3d9ba44edcc349524ff79e3569df5c2c9fd70
+E0806 20:22:19.422040       1 controller.go:223] failed to sync CatSet "apigee/ds": can't update status for CatSet apigee/ds: catsets.ctl.enisoc.com "ds" not found
+I0806 20:22:19.422141       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:19.422316       1 controller.go:411] CatSet apigee/ds has been deleted
+I0806 20:22:19.427341       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:22:19.427396       1 controller.go:411] CatSet apigee/ds has been deleted
+I0806 20:22:48.927760       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 0 items received
+I0806 20:23:12.708949       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 5 items received
+I0806 20:24:03.795067       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:24:03.795158       1 controller.go:411] datastore apigee/opdkds has been deleted
+I0806 20:24:55.984325       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 6 items received
+I0806 20:25:11.219557       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:25:11.219616       1 metacontroller.go:152] CompositeController apigeeplanet-controller has been deleted
+I0806 20:25:11.219673       1 controller.go:191] Shutting down apigeeplanet CompositeController
+I0806 20:25:11.219693       1 factory.go:89] Unsubscribed from shared informer for configmaps in v1 (total subscribers now 0)
+I0806 20:25:11.219699       1 factory.go:98] Stopping shared informer for configmaps in v1 (no more subscribers)
+I0806 20:25:11.219716       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 1)
+I0806 20:25:11.219728       1 factory.go:89] Unsubscribed from shared informer for apigeeplanets in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:25:11.219733       1 factory.go:98] Stopping shared informer for apigeeplanets in apigee.google.com/v1 (no more subscribers)
+I0806 20:25:11.356914       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:25:11.356951       1 metacontroller.go:152] CompositeController datastore-controller has been deleted
+I0806 20:25:11.357092       1 controller.go:191] Shutting down datastore CompositeController
+I0806 20:25:11.357222       1 factory.go:89] Unsubscribed from shared informer for statefulsets in apps/v1beta1 (total subscribers now 0)
+I0806 20:25:11.357664       1 factory.go:98] Stopping shared informer for statefulsets in apps/v1beta1 (no more subscribers)
+I0806 20:25:11.357900       1 factory.go:89] Unsubscribed from shared informer for datastores in apigee.google.com/v1 (total subscribers now 0)
+I0806 20:25:11.357922       1 factory.go:98] Stopping shared informer for datastores in apigee.google.com/v1 (no more subscribers)
+I0806 20:25:28.834101       1 metacontroller.go:148] sync CompositeController apigeeplanet-controller
+I0806 20:25:28.834181       1 factory.go:104] Starting shared informer for apigeeplanets in apigee.google.com/v1
+I0806 20:25:28.834294       1 factory.go:104] Starting shared informer for configmaps in v1
+I0806 20:25:28.834332       1 factory.go:104] Starting shared informer for datastores in apigee.google.com/v1
+I0806 20:25:28.834680       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:28.834725       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:28.834741       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:28.834727       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:28.835137       1 controller.go:165] Starting apigeeplanet CompositeController
+I0806 20:25:28.835184       1 controller.go:169] Waiting for apigeeplanet CompositeController caches to sync
+I0806 20:25:28.835197       1 controller.go:32] Waiting for caches to sync for apigeeplanet controller
+I0806 20:25:28.834691       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:28.835268       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:28.935446       1 shared_informer.go:123] caches populated
+I0806 20:25:28.935525       1 controller.go:39] Caches are synced for apigeeplanet controller
+I0806 20:25:29.043114       1 metacontroller.go:148] sync CompositeController datastore-controller
+I0806 20:25:29.043168       1 factory.go:69] Subscribed to shared informer for datastores in apigee.google.com/v1 (total subscribers now 2)
+I0806 20:25:29.043186       1 factory.go:69] Subscribed to shared informer for catsets in ctl.enisoc.com/v1 (total subscribers now 2)
+I0806 20:25:29.043203       1 factory.go:104] Starting shared informer for services in v1
+I0806 20:25:29.043389       1 controller.go:165] Starting datastore CompositeController
+I0806 20:25:29.043527       1 controller.go:169] Waiting for datastore CompositeController caches to sync
+I0806 20:25:29.043610       1 controller.go:32] Waiting for caches to sync for datastore controller
+I0806 20:25:29.044334       1 reflector.go:202] Starting reflector *unstructured.Unstructured (30m0s) from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:29.044498       1 reflector.go:240] Listing and watching *unstructured.Unstructured from metacontroller.app/dynamic/informer/factory.go:111
+I0806 20:25:29.143937       1 shared_informer.go:123] caches populated
+I0806 20:25:29.144027       1 controller.go:39] Caches are synced for datastore controller
+I0806 20:27:33.887024       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.CompositeController total 4 items received
+I0806 20:27:39.897005       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.DecoratorController total 0 items received
+I0806 20:27:46.213177       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:27:46.243162       1 manage_children.go:254] apigeeplanet apigee/opdkplanet: creating ConfigMap apigee/cluster-config
+I0806 20:27:46.251344       1 controller.go:307] apigeeplanet apigee/opdkplanet: child ConfigMap cluster-config created or updated
+I0806 20:27:46.263495       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:27:46.266485       1 manage_children.go:254] apigeeplanet apigee/opdkplanet: creating datastore apigee/opdkds
+I0806 20:27:46.273777       1 controller.go:307] apigeeplanet apigee/opdkplanet: child datastore opdkds created or updated
+I0806 20:27:46.273921       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:27:46.276464       1 manage_children.go:254] datastore apigee/opdkds: creating CatSet ds
+I0806 20:27:46.277840       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:27:46.286030       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:27:46.286094       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:46.289315       1 manage_children.go:254] datastore apigee/opdkds: creating Service apigee/dshs
+I0806 20:27:46.413625       1 request.go:485] Throttling request took 124.026366ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/services
+I0806 20:27:46.428949       1 controller.go:307] datastore apigee/opdkds: child Service dshs created or updated
+I0806 20:27:46.613535       1 request.go:485] Throttling request took 321.486466ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:27:46.622721       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:27:46.627305       1 controller_revision.go:285] CatSet apigee/ds: creating ControllerRevision catsets.ctl.enisoc.com-40a49e6f1f444fe63a7de2b59260a2bb4092c496
+I0806 20:27:46.633651       1 manage_children.go:254] CatSet apigee/ds: creating Pod ds-0
+I0806 20:27:46.813673       1 request.go:485] Throttling request took 387.233785ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:27:47.013658       1 request.go:485] Throttling request took 379.617888ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/pods
+I0806 20:27:47.039133       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:47.039377       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim vardir-ds-0
+I0806 20:27:47.052769       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:47.213521       1 request.go:485] Throttling request took 395.57238ms, request: PUT:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:27:47.219630       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:27:47.219715       1 controller.go:307] apigeeplanet apigee/opdkplanet: child datastore opdkds created or updated
+I0806 20:27:47.219776       1 controller.go:406] sync apigeeplanet apigee/opdkplanet
+I0806 20:27:47.413657       1 request.go:485] Throttling request took 374.110242ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:27:47.419391       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:27:47.420236       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim vardir-ds-1
+I0806 20:27:47.436727       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:27:47.613668       1 request.go:485] Throttling request took 386.992975ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/apigeeplanets/opdkplanet
+I0806 20:27:47.813645       1 request.go:485] Throttling request took 584.957131ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:27:47.817517       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:27:48.013680       1 request.go:485] Throttling request took 593.200329ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:27:48.021376       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:27:48.023639       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim vardir-ds-2
+I0806 20:27:48.035040       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:27:48.040079       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:48.213663       1 request.go:485] Throttling request took 391.962973ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:27:48.413589       1 request.go:485] Throttling request took 389.767052ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:27:48.419424       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:27:48.419555       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim datadir-ds-0
+I0806 20:27:48.429908       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:27:48.613626       1 request.go:485] Throttling request took 193.769504ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:27:48.619890       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim datadir-ds-1
+I0806 20:27:48.620085       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:27:48.632483       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:27:48.637729       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:48.813607       1 request.go:485] Throttling request took 193.53792ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:27:48.819282       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:27:48.819457       1 manage_children.go:254] CatSet apigee/ds: creating PersistentVolumeClaim datadir-ds-2
+I0806 20:27:48.827297       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:27:49.013635       1 request.go:485] Throttling request took 194.0251ms, request: POST:https://10.8.0.1:443/api/v1/namespaces/apigee/persistentvolumeclaims
+I0806 20:27:49.018904       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:27:49.031110       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:27:49.044867       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:49.213659       1 request.go:485] Throttling request took 193.996978ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:27:49.413573       1 request.go:485] Throttling request took 194.850416ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:27:49.422260       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:49.424065       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:27:49.424144       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:27:49.613698       1 request.go:485] Throttling request took 187.231331ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:27:49.813677       1 request.go:485] Throttling request took 385.889881ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:27:50.013576       1 request.go:485] Throttling request took 394.708936ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:27:50.035849       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:50.037924       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:27:50.038085       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:27:50.213599       1 request.go:485] Throttling request took 171.135402ms, request: GET:https://10.8.0.1:443/apis/apigee.google.com/v1/namespaces/apigee/datastores/opdkds
+I0806 20:27:50.413646       1 request.go:485] Throttling request took 370.941495ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:27:50.613720       1 request.go:485] Throttling request took 195.444527ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:27:50.623670       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:50.813581       1 request.go:485] Throttling request took 184.860243ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:27:51.013642       1 request.go:485] Throttling request took 194.603952ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:27:51.740118       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:51.740190       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:51.748459       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:27:51.770187       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-0 created or updated
+I0806 20:27:51.777298       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:52.353158       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:27:52.353218       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:52.354436       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:52.370058       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-1 created or updated
+I0806 20:27:52.390540       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:52.613709       1 request.go:485] Throttling request took 194.991521ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:27:53.828424       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:53.828510       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:53.842348       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:27:53.856920       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim vardir-ds-2 created or updated
+I0806 20:27:53.863190       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:54.182011       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:27:54.182145       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:54.184230       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:54.195256       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-2 created or updated
+I0806 20:27:54.214378       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:54.727697       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:27:54.727776       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:54.742990       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-1 created or updated
+I0806 20:27:54.758306       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:54.762784       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:27:54.769288       1 controller.go:307] CatSet apigee/ds: child PersistentVolumeClaim datadir-ds-0 created or updated
+I0806 20:27:54.779919       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:54.798346       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:27:55.013626       1 request.go:485] Throttling request took 194.866158ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:27:55.026579       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:27:55.213598       1 request.go:485] Throttling request took 181.827883ms, request: GET:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds
+I0806 20:27:55.413585       1 request.go:485] Throttling request took 195.573996ms, request: PUT:https://10.8.0.1:443/apis/ctl.enisoc.com/v1/namespaces/apigee/catsets/ds/status
+I0806 20:28:13.518031       1 controller.go:307] CatSet apigee/ds: child Pod ds-0 created or updated
+I0806 20:28:13.518085       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:28:13.531287       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-40a49e6f1f444fe63a7de2b59260a2bb4092c496
+I0806 20:28:13.540165       1 manage_children.go:254] CatSet apigee/ds: creating Pod ds-1
+I0806 20:28:13.559149       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:28:13.578479       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:28:13.601789       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:28:13.608224       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:28:13.608306       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:28:13.610767       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:28:13.630676       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:28:13.630754       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:28:13.632138       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:28:17.993337       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 35 items received
+I0806 20:28:19.890492       1 reflector.go:428] metacontroller.app/client/generated/informer/externalversions/factory.go:117: Watch close - *v1alpha1.ControllerRevision total 4 items received
+I0806 20:28:32.525079       1 controller.go:307] CatSet apigee/ds: child Pod ds-1 created or updated
+I0806 20:28:32.525154       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:28:32.532732       1 controller_revision.go:277] CatSet apigee/ds: updating ControllerRevision catsets.ctl.enisoc.com-40a49e6f1f444fe63a7de2b59260a2bb4092c496
+I0806 20:28:32.546181       1 manage_children.go:254] CatSet apigee/ds: creating Pod ds-2
+I0806 20:28:32.560802       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:28:32.572150       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:28:32.586566       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:28:32.595821       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:28:32.595887       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:28:32.597284       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:28:32.618891       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:28:32.618952       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:28:32.619009       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:28:43.673224       1 controller.go:307] CatSet apigee/ds: child Pod ds-2 created or updated
+I0806 20:28:43.673334       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:28:43.710473       1 controller.go:307] datastore apigee/opdkds: child CatSet ds created or updated
+I0806 20:28:43.710877       1 controller.go:406] sync datastore apigee/opdkds
+I0806 20:28:43.711204       1 controller.go:406] sync CatSet apigee/ds
+I0806 20:29:45.978680       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 36 items received
+I0806 20:30:28.854655       1 reflector.go:428] metacontroller.app/dynamic/informer/factory.go:111: Watch close - *unstructured.Unstructured total 2 items received

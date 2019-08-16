@@ -1,0 +1,48 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: apigee-controller
+  namespace: metacontroller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apigee-controller
+  template:
+    metadata:
+      labels:
+        app: apigee-controller
+    spec:
+      containers:
+      - name: controller
+        image: eu.gcr.io/apigee-trashcan-backends/nodejs-server:0.4
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: hooks
+          mountPath: /node/hooks
+        - name: tplconfigs
+          mountPath: /tplconfigs
+        - name: cluster-config
+          mountPath: /config
+          readOnly: true
+      volumes:
+      - name: hooks
+        configMap:
+          name: hooks
+      - name: tplconfigs
+        configMap:
+          name: tplconfigs
+      - name: cluster-config
+        configMap:
+          name: cluster-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apigee-controller
+  namespace: metacontroller
+spec:
+  selector:
+    app: apigee-controller
+  ports:
+  - port: 80
