@@ -1,4 +1,4 @@
-tag = 0.3
+tag = 0.4
 
 image:
 	docker build -t nodejs-server:$(tag) .
