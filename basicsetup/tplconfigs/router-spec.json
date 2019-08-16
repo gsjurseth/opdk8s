@@ -1,0 +1,143 @@
+{
+  "apiVersion": "ctl.enisoc.com/v1",
+  "kind": "CatSet",
+  "metadata": {
+    "name": "router",
+    "namespace": "apigee"
+  },
+  "spec": {
+    "replicas": 2,
+    "podManagementPolicy": "Parallel",
+    "selector": {
+      "matchLabels": {
+        "app": "router"
+      }
+    },
+    "serviceName": "routerhs",
+    "template": {
+      "metadata": {
+        "labels": {
+          "app": "router"
+        },
+        "namespace": "apigee"
+      },
+      "spec": {
+        "containers": [
+          {
+            "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
+            "name": "apigee-router",
+            "command" : [
+              "sh",
+              "-c",
+              "sudo HOSTIP=\"$(hostname).routerhs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p r -f /config/cluster.config && while true ; do tail -f /opt/apigee/var/log/edge-router/logs/system.log ; done" 
+            ],
+            "ports": [
+              {
+                "containerPort": 4527,
+                "name": "dist-cache"
+              },
+              {
+                "containerPort": 8081,
+                "name": "mgmt-port"
+              },
+              {
+                "containerPort": 15999,
+                "name": "health"
+              },
+              {
+                "containerPort": 59001,
+                "name": "validate"
+              },
+              {
+                "containerPort": 59002,
+                "name": "smartdocs"
+              }
+            ],
+            "volumeMounts": [
+              {
+                "mountPath": "/opt/apigee/data",
+                "name": "datadir"
+              },
+              {
+                "mountPath": "/opt/apigee/var",
+                "name": "vardir"
+              },
+              {
+                "mountPath": "/config",
+                "name": "cluster-config",
+                "readOnly": true
+              },
+              {
+                "mountPath": "/license/license.txt",
+                "name": "license-volume",
+                "readOnly": true,
+                "subPath": "license.txt"
+              }
+            ]
+          }
+        ],
+        "securityContext": {
+          "fsGroup": 998,
+          "runAsUser": 999
+        },
+        "terminationGracePeriodSeconds": 1,
+        "volumes": [
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "cluster-config"
+            },
+            "name": "cluster-config"
+          },
+          {
+            "configMap": {
+              "defaultMode": 493,
+              "name": "apigee-license"
+            },
+            "name": "license-volume"
+          }
+        ]
+      }
+    },
+    "volumeClaimTemplates": [
+      {
+        "metadata": {
+          "labels": {
+            "app": "router"
+          },
+          "name": "datadir",
+          "namespace": "apigee"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      },
+      {
+        "metadata": {
+          "labels": {
+            "app": "router"
+          },
+          "name": "vardir",
+          "namespace": "apigee"
+        },
+        "spec": {
+          "accessModes": [
+            "ReadWriteOnce"
+          ],
+          "resources": {
+            "requests": {
+              "storage": "10Gi"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

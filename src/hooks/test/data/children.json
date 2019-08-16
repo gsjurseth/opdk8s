@@ -41,5 +41,6 @@
   },
   "qs.apigee.google.com/v1": {},
   "psmaster.apigee.google.com/v1": {},
-  "psslave.apigee.google.com/v1": {}
+  "psslave.apigee.google.com/v1": {},
+  "router.apigee.google.com/v1": {}
 }

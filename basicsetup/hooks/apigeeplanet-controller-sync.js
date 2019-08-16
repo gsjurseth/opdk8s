@@ -15,11 +15,6 @@ limitations under the License.
 */
 
 const pr = require('properties-reader');
-/*
-const listOfChildren = [ "ConfigMap.v1", "datastore.apigee.google.com/v1",
-    "managementserver.apigee.google.com/v1", "qs.apigee.google.com/v1" ];
-    */
-
 const listOfChildren = [ "ConfigMap.v1", "datastore.apigee.google.com/v1",
     "managementserver.apigee.google.com/v1", "qs.apigee.google.com/v1",
     "psmaster.apigee.google.com/v1", "psslave.apigee.google.com/v1" ];
@@ -171,7 +166,8 @@ module.exports = async function (context) {
       "datastore.apigee.google.com/v1":newMS(),
       "managementserver.apigee.google.com/v1":newQS(),
       "qs.apigee.google.com/v1":newPSMaster(),
-      "psmaster.apigee.google.com/v1":newPSSlave()
+      "psmaster.apigee.google.com/v1":newPSSlave(),
+      "psslave.apigee.google.com/v1" : {}
     };
 
     status = calculateStatus(children);
@@ -192,12 +188,11 @@ module.exports = async function (context) {
       }
     }
 
-    /*
-    if (status['psslave.apigee.google.com/v1']) {
+    if (status['router.apigee.google.com/v1'] != null && status['router.apigee.gogle.com/v1']) {
       planetstatus = true;
 
     }
-    */
+
     desired.status = { members: status, planet: planetstatus };
   }
   catch(e) {

@@ -13,7 +13,7 @@ function finish() {
 }
 
 function doHelp() {
-  echo "$0 [-u user -d domain] -l /path/to/license -c [clean-all|clean-mc|clean-apigee|setup-all|setup-apigee|setup-mc]" >&2
+  echo "$0 [-u user -d domain] -l /path/to/license -c [clean-all|clean-mc|clean-apigee|setup-all|setup-apigee|setup-mc|update-hooks]" >&2
   finish
 }
 
@@ -95,6 +95,19 @@ function setupMetacontroller() {
   kubectl apply -f https://raw.githubusercontent.com/GoogleCloudPlatform/metacontroller/master/examples/catset/catset-controller.yaml
 }
 
+function updateHooks() {
+  echo "updating apigee controller hooks and crds" >&2
+  kubectl apply -f $BASE/crds
+
+  ## CM for use with the apigee controllers
+  kubectl -n metacontroller delete -f $BASE/controllers
+  kubectl -n metacontroller delete cm hooks
+  kubectl -n metacontroller create cm hooks --from-file=$BASE/hooks
+
+  ## CM for use with apigee itself
+  kubectl -n metacontroller apply -f $BASE/controllers
+}
+
 function setupApigee() {
   if [ -z $license ]
   then
@@ -156,6 +169,9 @@ case $cmd in
     fi
       echo "skipdelete is $skipdelete"
     setupApigee
+  ;;
+  update-hooks)
+    updateHooks
   ;;
 esac
 

@@ -1,0 +1,9 @@
+apiVersion: apigee.google.com/v1
+kind: org
+metadata:
+  name: acme
+  namespace: apigee
+spec:
+  org_name: acme
+  org_admin: opdk@google.com
+  router-replicas: 4

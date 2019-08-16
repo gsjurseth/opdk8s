@@ -1,0 +1,40 @@
+{
+    "apiVersion": "v1",
+    "kind": "Service",
+    "metadata": {
+      "labels": {
+        "app": "router"
+      },
+      "name": "routerhs",
+      "namespace": "apigee"
+    },
+    "spec": {
+      "clusterIP": "None",
+      "ports": [
+        {
+          "name": "dist-cache",
+          "port": 4527
+        },
+        {
+          "name": "mgmt-port",
+          "port": 8081
+        },
+        {
+          "name": "health",
+          "port": 15999
+        },
+        {
+          "name": "validate",
+          "port": 59001 
+        },
+        {
+          "name": "smartdocs",
+          "port": 59002
+        }
+      ],
+      "selector": {
+        "app": "router"
+      }
+    }
+}
+

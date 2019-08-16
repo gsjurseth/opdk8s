@@ -15,13 +15,16 @@ spec:
     spec:
       containers:
       - name: controller
-        image: eu.gcr.io/apigee-trashcan-backends/nodejs-server:0.3
+        image: eu.gcr.io/apigee-trashcan-backends/nodejs-server:0.4
         imagePullPolicy: Always
         volumeMounts:
         - name: hooks
           mountPath: /node/hooks
         - name: tplconfigs
           mountPath: /tplconfigs
+        - name: cluster-config
+          mountPath: /config
+          readOnly: true
       volumes:
       - name: hooks
         configMap:
@@ -29,6 +32,9 @@ spec:
       - name: tplconfigs
         configMap:
           name: tplconfigs
+      - name: cluster-config
+        configMap:
+          name: cluster-config
 ---
 apiVersion: v1
 kind: Service

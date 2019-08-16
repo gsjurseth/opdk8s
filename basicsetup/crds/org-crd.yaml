@@ -10,30 +10,35 @@ spec:
     plural: orgs
     singular: org
     kind: org
+  subresources:
+    status: {}
   validation:
     openAPIV3Schema:
       required: ["spec"]
       properties:
         spec:
-          required: ["ORG_NAME","ORG_ADMIN"]
+          required: ["org_name","org_admin"]
           properties:
-            ORG_NAME:
+            org_name:
               type: "string"
               minimum: 1
-            ORG_ADMIN:
+            org_admin:
               type: "string"
               minimum: 1
-            NEW_USER:
+            new_user:
               type: boolean
-            USER_NAME:
+            user_name:
               type: "string"
               minimum: 1
-            FIRST_NAME:
+            first_name:
               type: "string"
               minimum: 1
-            LAST_NAME:
+            last_name:
               type: "string"
               minimum: 1
-            USER_PWD:
+            user_pwd:
               type: "string"
               minimum: 1
+            router-replicas:
+              type: "integer"
+              minimum: 2

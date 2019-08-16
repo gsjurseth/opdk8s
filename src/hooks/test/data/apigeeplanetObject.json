@@ -61,9 +61,10 @@
         "ConfigMap.v1": { "cluster-config": {} },
         "datastore.apigee.google.com/v1": { "opdkds" : {} },
         "managementserver.apigee.google.com/v1": { "opdkms" : {} },
+        "qs.apigee.google.com/v1": { "opdkqs" : {} },
         "psmaster.apigee.google.com/v1": { "opdkpsmaster" : {} },
         "psslave.apigee.google.com/v1": { "opdkpsslave" : {} },
-        "qs.apigee.google.com/v1": { "opdkqs" : {} }
+        "router.apigee.google.com/v1": { "opdkrouter" : {} }
       },
       "finalizing": false
     }
