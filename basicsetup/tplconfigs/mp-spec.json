@@ -29,9 +29,9 @@
               "-c",
               "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).rmphs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p mp -f /config/cluster.config && while true ; do tail -f /opt/apigee/var/log/edge-message-processor/logs/system.log ; done"
             ],
-            "image": "eu.gcr.io/gsj-k8s-training/apigee-opdk:16",
+            "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
             "imagePullPolicy": "Always",
-            "name": "apigee-rmp",
+            "name": "apigee-mp",
             "ports": [
               {
                 "containerPort": 4528,

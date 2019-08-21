@@ -9,8 +9,10 @@ spec:
     apiVersion: apigee.google.com/v1
     resource: envs
   childResources:
-  - apiVersion: ctl.enisoc.com/v1
-    resource: catsets
+  - apiVersion: apps/v1
+    resource: replicasets
+    updateStrategy:
+      method: InPlace
   - apiVersion: v1
     resource: services
   hooks:

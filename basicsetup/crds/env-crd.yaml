@@ -15,8 +15,11 @@ spec:
       required: ["spec"]
       properties:
         spec:
-          required: ["ENV_NAME"]
+          required: ["org"]
           properties:
-            ENV_NAME:
+            org:
               type: "string"
               minimum: 1
+            mp-replicas:
+              type: "integer"
+              minimum: 2

@@ -80,12 +80,13 @@ const checkForOrg = async function(org) {
     headers: h,
     body: JSON.stringify( newOrgBody(org) )
   };
-  let url = `${msProps.url}/organizations/${org}`;
-  console.log('about to check for org: %s', url);
-  const res = await fetch(`${msProps.url}/organizations/${org}`,opts);
-  //const json = await res.json();
+  let url = `${msProps.url}/v1/organizations/${org}`;
+  const res = await fetch(`${url}`,opts);
   const ok = res.ok;
-  console.log('the whole response we got back was: %j', res);
+  const r = await res.json()
+    .catch( e => {
+      console.log("we failed with: %s", e.stack);
+    });
   return ok;
 }
 
@@ -102,7 +103,6 @@ const addUsersToOrg = async function(org) {
   };
   let encEmail = encodeURIComponent(msProps.user);
   let url = `${msProps.url}/v1/organizations/${org}/userroles/orgadmin/users?id=${encEmail}`;
-  console.log('about to add user to role with url: %s', url);
   await fetch( `${url}`, opts )
     .catch( e => {
       throw new Error("Failed adding orgadmin: " + e.stack);
@@ -125,7 +125,6 @@ const associateOrg = async function(org) {
 
   opts.body = params;
   let url = `${msProps.url}/v1/organizations/${org}/pods`;
-  console.log('about to add org pod and region with url: %s', url);
   await fetch(`${url}`, opts)
     .catch( e => {
       throw new Error("Failed associating org: " + e.stack);
@@ -144,11 +143,55 @@ const createOrg = async function(org) {
     body: JSON.stringify( newOrgBody(org) )
   };
   let url = `${msProps.url}/v1/organizations`;
-  console.log('about to add org with url: %s', url);
   await fetch(`${url}`,opts)
     .catch( e => {
       throw new Error("Failed creating org: " + e.stack);
     });
+}
+
+const deleteOrg = async function(org) {
+  let h = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Basic ' + Buffer.from(`${msProps.user}:${msProps.pass}`).toString('base64')
+  };
+  let opts = {
+    method: 'DELETE',
+    headers: h
+  };
+  let url = `${msProps.url}/v1/organizations/${org}`;
+  await fetch(`${url}`,opts)
+    .catch( e => {
+      throw new Error("Failed deleting org: " + e.stack);
+    });
+}
+
+const disAssociateOrg = async function(org) {
+  let h = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json',
+    'Authorization': 'Basic ' + Buffer.from(`${msProps.user}:${msProps.pass}`).toString('base64')
+  };
+  let opts = {
+    method: 'POST',
+    headers: h
+  };
+  let params = new URLSearchParams();
+  params.append( 'region', msProps.region );
+  params.append( 'pod', msProps.pod );
+  params.append( 'action', 'remove' );
+
+  opts.body = params;
+  let url = `${msProps.url}/v1/organizations/${org}/pods`;
+  await fetch(`${url}`, opts)
+    .catch( e => {
+      throw new Error("Failed associating org: " + e.stack);
+    });
+}
+
+const removeOrg = async function(org) { 
+  await disAssociateOrg(org);
+  await deleteOrg(org);
 }
 
 const addOrg = async function(org) { 
@@ -185,10 +228,24 @@ const calculateStatus = async function(observed) {
 
   if ( allstatus['router.apigee.google.com/v1'].ready ) {
     let orgReady = checkForOrg(org);
-    allstatus.org[ org ] = orgReady;
+    allstatus.org[ org ] = { ready: orgReady };
   }
 
   return allstatus;
+}
+
+const finalize = async function(observed,desired,status) {
+  let org = observed.parent.metadata.name;
+  desired.children = [];
+
+  if ( !status['env.apigee.google.com/v1'].ready ) {
+    if ( status.org[org].ready ) {
+      await removeOrg(org);
+    }
+  }
+
+  desired.finalized = true;
+  return {status: 200, body: desired, resyncAfterSeconds: 10, headers: {'Content-Type': 'application/json'}};
 }
 
 module.exports = async function (context) {
@@ -199,15 +256,18 @@ module.exports = async function (context) {
   let children = observed.children;
   let org = parent.metadata.name;
 
+  console.log('from the org: %j', observed);
   try {
     let status = await calculateStatus(observed);
+     
+    if (observed.finalizing) {
+      console.log('Finalizing...');
+      return await finalize(observed,desired,status);
+    }
 
-    console.log('so the status is: %j', status);
     if (status['router.apigee.google.com/v1'].ready) {
-      if ( !status.org[ org ].ready ) {
-        console.log('now we are gonna try and add the org: %s', org);
+      if ( !( status.org[ org ].ready == true ) ) {
         await addOrg(org);
-        console.log('after we have added the org');
       }
       else {
         orgStatus.ready = true;
