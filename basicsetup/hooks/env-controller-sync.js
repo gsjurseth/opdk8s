@@ -294,6 +294,8 @@ module.exports = async function (context) {
     */
     desired.status =  { members: status, envStatus };
     mpSpec.metadata.name = mpChild;
+    mpSpec.metadata.labels.org = org;
+    mpSpec.metadata.labels.env = env;
     mpSvc.metadata.name = mpSvcName;
     desired.children.push( mpSpec);
     desired.children.push( mpSvc);

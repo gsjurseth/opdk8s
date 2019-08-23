@@ -3,7 +3,7 @@
   "kind": "ReplicaSet",
   "metadata": {
     "labels": {
-      "app": "mp"
+      "app": "apigee-mp"
     },
     "name": "mp",
     "namespace": "apigee"
