@@ -1,0 +1,18 @@
+apiVersion: metacontroller.k8s.io/v1alpha1
+kind: DecoratorController
+metadata:
+  name: mp-decorator
+spec:
+  resources:
+  - apiVersion: v1
+    resource: pods
+    annotationSelector:
+      matchAnnotations: 
+        thingy: apigee-mp
+  hooks:
+    sync:
+      webhook:
+        url: http://apigee-controller.metacontroller/mp-decorator-sync
+    finalize:
+      webhook:
+        url: http://apigee-controller.metacontroller/mp-decorator-sync

@@ -241,7 +241,9 @@ const finalize = async function(observed,desired,status) {
   let org = observed.parent.metadata.name;
   desired.children = [];
 
-  if ( !status['env.apigee.google.com/v1'].ready ) {
+  if ( status['env.apigee.google.com/v1'] != null &&
+    status['env.apigee.google.com/v1'].ready != null && 
+    !status['env.apigee.google.com/v1'].ready ) {
     if ( status.org[org].ready ) {
       await removeOrg(org);
     }
@@ -293,10 +295,21 @@ module.exports = async function (context) {
     }
     */
     desired.status =  { members: status, envStatus };
+
+    let appLabel = `apigee-mp-${org}-${env}`;
+
     mpSpec.metadata.name = mpChild;
-    mpSpec.metadata.labels.org = org;
-    mpSpec.metadata.labels.env = env;
     mpSvc.metadata.name = mpSvcName;
+    mpSpec.metadata.labels.app =  appLabel;
+    mpSvc.spec.selector.app = appLabel;
+    mpSpec.spec.selector.matchLabels.app = appLabel;
+    mpSpec.spec.template.metadata.labels.app = appLabel;
+
+    mpSpec.spec.template.metadata.annotations = {};
+    mpSpec.spec.template.metadata.annotations.org = org;
+    mpSpec.spec.template.metadata.annotations.env = env;
+    mpSpec.spec.template.metadata.annotations.thingy = 'apigee-mp';
+
     desired.children.push( mpSpec);
     desired.children.push( mpSvc);
   }

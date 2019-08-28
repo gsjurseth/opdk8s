@@ -1,0 +1,8 @@
+apiVersion: apigee.google.com/v1
+kind: env
+metadata:
+  name: test
+  namespace: apigee
+spec:
+  org: acme
+  mp-replicas: 2

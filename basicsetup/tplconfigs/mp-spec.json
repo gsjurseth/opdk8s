@@ -12,13 +12,13 @@
     "replicas": 2,
     "selector": {
       "matchLabels": {
-        "app": "mp"
+        "app": "apigee-mp"
       }
     },
     "template": {
       "metadata": {
         "labels": {
-          "app": "mp"
+          "app": "apigee-mp"
         }
       },
       "spec": {
@@ -29,43 +29,43 @@
               "-c",
               "sudo chown apigee:apigee /opt/apigee && sudo HOSTIP=\"$(hostname).rmphs.apigee.svc.cluster.local\" /opt/apigee/apigee-setup/bin/setup.sh -p mp -f /config/cluster.config && while true ; do tail -f /opt/apigee/var/log/edge-message-processor/logs/system.log ; done"
             ],
+            "readinessProbe": {
+              "httpGet": {
+                "path": "/v1/servers/self",
+                "port": 8082
+              },
+              "initialDelaySeconds": 90,
+              "timeoutSeconds": 5
+            },
             "image": "eu.gcr.io/apigee-trashcan-backends/apigee-opdk:1",
             "imagePullPolicy": "Always",
             "name": "apigee-mp",
             "ports": [
               {
-                "containerPort": 4528,
-                "name": "dist-cache"
+                "name": "jmx",
+                "containerPort": 1101
               },
               {
-                "containerPort": 1101,
-                "name": "jmx"
+                "name": "dist-cache",
+                "containerPort": 4528
               },
               {
-                "containerPort": 8082,
-                "name": "mgmt-port"
+                "name": "mgmt-port",
+                "containerPort": 8082
               },
               {
-                "containerPort": 8443,
-                "name": "tls-for-mp"
+                "name": "tls-for-mp",
+                "containerPort": 8443
               },
               {
-                "containerPort": 8998,
-                "name": "r-mp-port"
+                "name": "r-mp-port",
+                "containerPort": 8998
               }
             ],
-            "readinessProbe": {
-              "tcpSocket": {
-                "port": 8082
-              },
-              "initialDelaySeconds": 120,
-              "periodSeconds": 30,
-              "timeoutSeconds": 2
-            },
             "resources": {
               "requests": {
-                "cpu": ".1",
-                "memory": ".25Gi"
+                "cpu": ".2",
+                "memory": ".5Gi"
               }
             },
             "volumeMounts": [

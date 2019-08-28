@@ -256,7 +256,6 @@ module.exports = async function (context) {
   let children = observed.children;
   let org = parent.metadata.name;
 
-  console.log('from the org: %j', observed);
   try {
     let status = await calculateStatus(observed);
      
